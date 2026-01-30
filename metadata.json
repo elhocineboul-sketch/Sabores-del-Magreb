@@ -1,0 +1,7 @@
+{
+  "name": "Sabores del Magreb",
+  "description": "A modern fast-food website fusing Moroccan flavors with quick service dining. Features online ordering, order tracking, and an AI-powered menu assistant.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
