@@ -44,20 +44,63 @@ alter table public.profiles enable row level security;
 alter table public.menu_items enable row level security;
 alter table public.orders enable row level security;
 
--- 5. Create Policies (Permissive policies for this hybrid app)
+-- 5. Create Policies for Tables
 
 -- Profiles: Public read, User update own
+drop policy if exists "Public profiles are viewable by everyone." on public.profiles;
 create policy "Public profiles are viewable by everyone." on public.profiles for select using (true);
+
+drop policy if exists "Users can insert their own profile." on public.profiles;
 create policy "Users can insert their own profile." on public.profiles for insert with check (auth.uid() = id);
+
+drop policy if exists "Users can update own profile." on public.profiles;
 create policy "Users can update own profile." on public.profiles for update using (auth.uid() = id);
 
 -- Menu Items: Public read, All insert/update/delete (Protected by App Admin Login logic)
+drop policy if exists "Menu items are viewable by everyone." on public.menu_items;
 create policy "Menu items are viewable by everyone." on public.menu_items for select using (true);
+
+drop policy if exists "Enable insert for authenticated users and anon (Hybrid)." on public.menu_items;
 create policy "Enable insert for authenticated users and anon (Hybrid)." on public.menu_items for insert with check (true);
+
+drop policy if exists "Enable update for authenticated users and anon." on public.menu_items;
 create policy "Enable update for authenticated users and anon." on public.menu_items for update using (true);
+
+drop policy if exists "Enable delete for authenticated users and anon." on public.menu_items;
 create policy "Enable delete for authenticated users and anon." on public.menu_items for delete using (true);
 
 -- Orders: Public read (for tracking), All insert/update
+drop policy if exists "Orders are viewable by everyone." on public.orders;
 create policy "Orders are viewable by everyone." on public.orders for select using (true);
+
+drop policy if exists "Enable insert for everyone." on public.orders;
 create policy "Enable insert for everyone." on public.orders for insert with check (true);
+
+drop policy if exists "Enable update for everyone." on public.orders;
 create policy "Enable update for everyone." on public.orders for update using (true);
+
+-- 6. Storage Bucket & Policies (Fix for Upload Error)
+-- Ensure the 'images' bucket exists and is public
+insert into storage.buckets (id, name, public) 
+values ('images', 'images', true) 
+on conflict (id) do update set public = true;
+
+-- Drop existing policies to prevent conflicts
+drop policy if exists "Give public access to images" on storage.objects;
+drop policy if exists "Allow public uploads to images" on storage.objects;
+drop policy if exists "Allow public updates to images" on storage.objects;
+
+-- Policy to allow public viewing of images
+create policy "Give public access to images" 
+on storage.objects for select 
+using ( bucket_id = 'images' );
+
+-- Policy to allow anyone (anon + authenticated) to upload images
+create policy "Allow public uploads to images" 
+on storage.objects for insert 
+with check ( bucket_id = 'images' );
+
+-- Policy to allow updates (e.g. overwriting)
+create policy "Allow public updates to images" 
+on storage.objects for update 
+using ( bucket_id = 'images' );

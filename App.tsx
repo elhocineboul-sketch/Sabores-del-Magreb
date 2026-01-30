@@ -10,7 +10,7 @@ import {
   UserX, SaveAll, Camera
 } from 'lucide-react';
 
-import { supabase, uploadImage } from './services/supabase';
+import { supabase, uploadImage, compressImage } from './services/supabase';
 import { CATEGORIES, MENU_ITEMS_BY_LANG, ADMIN_USERNAME, ADMIN_PASSWORD, DRIVER_USERNAME, DRIVER_PASSWORD, MOCK_CURRENT_USER_KEY } from './constants';
 import { MenuItem, CartItem, Order, ViewState, Category } from './types';
 import AiChef from './components/AiChef';
@@ -175,7 +175,7 @@ const HeroSlider = ({ onOrderClick, t, lang, images }: { onOrderClick: () => voi
   }, [images]);
 
   return (
-    <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-stone-900 rounded-b-[3rem] shadow-2xl mx-2 mt-2">
+    <section className="relative h-[60vh] md:h-[85vh] flex items-center justify-center overflow-hidden bg-stone-900 rounded-b-[2rem] md:rounded-b-[3rem] shadow-2xl mx-2 mt-2">
       {images.map((img, index) => (
         <div 
           key={index}
@@ -193,10 +193,10 @@ const HeroSlider = ({ onOrderClick, t, lang, images }: { onOrderClick: () => voi
       ))}
       
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <div className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-medium mb-4 animate-fade-in-down">
+        <div className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs md:text-sm font-medium mb-2 md:mb-4 animate-fade-in-down">
           ✨ {t('heroTitle2')} {t('authenticTaste')}
         </div>
-        <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight drop-shadow-2xl">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6 leading-tight drop-shadow-2xl">
           {lang === 'ar' ? (
              <>{t('heroTitle1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">{t('heroTitle2')}</span><br/>
              {t('heroTitle3')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">{t('heroTitle4')}</span></>
@@ -205,13 +205,13 @@ const HeroSlider = ({ onOrderClick, t, lang, images }: { onOrderClick: () => voi
              {t('heroTitle3')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">{t('heroTitle4')}</span></>
           )}
         </h1>
-        <p className="text-lg md:text-2xl mb-10 text-stone-200 font-light max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-lg md:text-2xl mb-6 md:mb-10 text-stone-200 font-light max-w-2xl mx-auto leading-relaxed px-4">
           {t('heroSubtitle')}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button 
             onClick={onOrderClick}
-            className="group bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-full text-xl font-bold transition-all shadow-[0_10px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_30px_rgba(225,29,72,0.4)] hover:-translate-y-1 flex items-center gap-2"
+            className="group bg-red-600 hover:bg-red-700 text-white px-8 py-3 md:px-10 md:py-4 rounded-full text-lg md:text-xl font-bold transition-all shadow-[0_10px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_30px_rgba(225,29,72,0.4)] hover:-translate-y-1 flex items-center gap-2"
           >
             {t('orderNow')} <ArrowRight className="group-hover:translate-x-[-4px] transition-transform" />
           </button>
@@ -228,14 +228,12 @@ const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [favorites, setFavorites] = useState<string[]>([]); // Favorites State
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState<Category>('all');
   const [trackedOrder, setTrackedOrder] = useState<string>('');
   const [trackingResult, setTrackingResult] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // -- Checkout State --
   const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
   const [checkoutData, setCheckoutData] = useState({ 
     name: '', 
@@ -246,14 +244,8 @@ const App: React.FC = () => {
     lng: null as number | null 
   });
   const [isLocating, setIsLocating] = useState(false);
-
-  // -- Admin State --
   const [adminTab, setAdminTab] = useState<'overview' | 'orders' | 'products' | 'reviews' | 'settings'>('overview');
-  
-  // -- Orders State (From Supabase) --
   const [orders, setOrders] = useState<Order[]>([]);
-
-  // -- Slider Images State --
   const DEFAULT_HERO_IMAGES = [
     "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1965&auto=format&fit=crop", 
     "https://images.unsplash.com/photo-1511690656952-34342d5c2899?q=80&w=2070&auto=format&fit=crop", 
@@ -269,31 +261,19 @@ const App: React.FC = () => {
   const [newSliderImage, setNewSliderImage] = useState('');
   const [sliderInputMethod, setSliderInputMethod] = useState<'url' | 'file'>('url');
   const [sliderUploadedImage, setSliderUploadedImage] = useState<string | null>(null);
-
-  // Unified Product Modal State
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [productForm, setProductForm] = useState<Partial<MenuItem>>({});
-  
-  // Image Upload State
   const [imageInputMethod, setImageInputMethod] = useState<'url' | 'file'>('url');
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-
-  // Profile Image Upload State
   const [profileImageInputMethod, setProfileImageInputMethod] = useState<'url' | 'file'>('url');
   const [profileUploadedImage, setProfileUploadedImage] = useState<string | null>(null);
-  
-  // Upload Loading State
   const [isUploading, setIsUploading] = useState(false);
-
   const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
-  
-  // -- Authentication State (Initialized from LocalStorage for persistence) --
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     try {
       return !!localStorage.getItem(MOCK_CURRENT_USER_KEY);
     } catch { return false; }
   });
-  
   const [currentUser, setCurrentUser] = useState<string | null>(() => {
     try {
       const stored = localStorage.getItem(MOCK_CURRENT_USER_KEY);
@@ -304,18 +284,13 @@ const App: React.FC = () => {
       return null;
     } catch { return null; }
   });
-
-  // -- User Data State --
   const [userData, setUserData] = useState<{name: string, phone: string, email: string, image?: string, uid?: string} | null>(() => {
     try {
         const stored = localStorage.getItem(MOCK_CURRENT_USER_KEY);
-        // Only return regular user data, not admin flags if possible, but keeping it simple is fine
         return stored ? JSON.parse(stored) : null;
     } catch { return null; }
   });
-
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  
   const [isAdmin, setIsAdmin] = useState(() => {
     try {
       const stored = localStorage.getItem(MOCK_CURRENT_USER_KEY);
@@ -325,18 +300,12 @@ const App: React.FC = () => {
       return false;
     } catch { return false; }
   });
-
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [loginMode, setLoginMode] = useState<'login' | 'register'>('login');
-  
-  // Driver Login Mode in Modal
   const [adminLoginType, setAdminLoginType] = useState<'admin' | 'driver'>('admin');
   const [verificationCodeInput, setVerificationCodeInput] = useState<{[key: string]: string}>({});
 
-  // -- SUPABASE INTEGRATION --
-  
-  // 1. Fetch Menu Items from Supabase (fallback to constants)
   useEffect(() => {
     const fetchMenu = async () => {
       try {
@@ -344,7 +313,6 @@ const App: React.FC = () => {
         if (!error && data && data.length > 0) {
           setMenuItems(data as MenuItem[]);
         } else {
-           // Fallback if DB is empty or error
            const items = MENU_ITEMS_BY_LANG[language] || [];
            setMenuItems(Array.isArray(items) ? items : []);
         }
@@ -357,10 +325,8 @@ const App: React.FC = () => {
     fetchMenu();
   }, [language]);
 
-  // 2. Fetch Orders & Realtime subscription
   useEffect(() => {
     const fetchOrders = async () => {
-      // Return if tables not created yet (simple error check implied by catch)
       try {
           const { data, error } = await supabase.from('orders').select('*').order('date', { ascending: false });
           if (!error && data) {
@@ -377,23 +343,18 @@ const App: React.FC = () => {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'orders' },
         (payload) => {
-           fetchOrders(); // Simply refresh list on any change for simplicity
+           fetchOrders();
         }
       )
       .subscribe();
-
     return () => { supabase.removeChannel(channel); };
   }, []);
 
-  // 3. Auth Listener & Profile Fetching
   useEffect(() => {
      const checkUser = async () => {
         const { data: { session } } = await supabase.auth.getSession();
-        
-        // If Supabase session exists, it takes precedence for regular users
         if (session && session.user) {
              setIsLoggedIn(true);
-             // Fetch profile
              const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
              if (profile) {
                  setUserData({ ...profile, uid: session.user.id, email: session.user.email || '' });
@@ -402,25 +363,21 @@ const App: React.FC = () => {
                  setUserData({ name: '', phone: '', email: session.user.email || '', uid: session.user.id });
                  setCurrentUser(session.user.email || '');
              }
-             // Ensure admin state is false for regular supabase users
              setIsAdmin(false);
         }
-        // If no supabase session, we rely on the localStorage state initialized in useState
      };
-     
      checkUser();
 
      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
         if (session) {
              setIsLoggedIn(true);
-             setIsAdmin(false); // Reset admin if a real user logs in
+             setIsAdmin(false);
              const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
              if (profile) {
                  setUserData({ ...profile, uid: session.user.id, email: session.user.email || '' });
                  setCurrentUser(profile.name);
              }
         } else {
-             // Only clear if not admin mock (check local storage key)
              if (!localStorage.getItem(MOCK_CURRENT_USER_KEY)) {
                 setIsLoggedIn(false);
                 setUserData(null);
@@ -429,12 +386,9 @@ const App: React.FC = () => {
              }
         }
      });
-
      return () => subscription.unsubscribe();
   }, []);
 
-
-  // Calculate Most Ordered Items based on orders
   const mostOrderedItems = useMemo(() => {
     const counts: {[id: string]: number} = {};
     const findIdByName = (name: string) => {
@@ -448,7 +402,6 @@ const App: React.FC = () => {
     };
     orders.forEach(order => {
        if (typeof order.items === 'string') {
-          // Legacy string support
           const parts = order.items.split(', ');
           parts.forEach((part: string) => {
              const match = part.match(/(\d+)x\s(.+)/);
@@ -474,7 +427,6 @@ const App: React.FC = () => {
     }).slice(0, 4); 
   }, [orders, menuItems]);
 
-  // Reactive Tracking: Update tracking status
   useEffect(() => {
     if (view === 'track' && trackedOrder && trackingResult && trackingResult !== 'not_found') {
         const found = orders.find(o => o.id.toLowerCase() === trackedOrder.toLowerCase().trim());
@@ -485,22 +437,15 @@ const App: React.FC = () => {
     }
   }, [orders, trackedOrder, view, trackingResult]);
 
-  // -- Loyalty Program Logic --
   const userOrderStats = useMemo(() => {
     if (!currentUser) return { count: 0, progress: 0, isWinner: false };
-    
-    // Filter non-cancelled orders for current user
     const userOrders = orders.filter(o => 
       (o.customer === currentUser || (currentUser === 'guest' && o.customer === 'guest')) && 
       o.status !== 'cancelled'
     );
-    
     const count = userOrders.length;
-    // Calculate progress for the current cycle of 10
     const progress = (count % 10) === 0 && count > 0 ? 100 : ((count % 10) / 10) * 100;
-    // Check if user just hit a multiple of 10
     const isWinner = count > 0 && count % 10 === 0;
-    
     return { count, progress, isWinner };
   }, [orders, currentUser]);
 
@@ -545,8 +490,6 @@ const App: React.FC = () => {
     }
   }, [toast]);
 
-  // -- LOGOUT FUNCTIONS --
-
   const handleUserLogout = async () => {
     await supabase.auth.signOut();
     setIsLoggedIn(false); setCurrentUser(null); setIsAdmin(false); setUserData(null);
@@ -556,7 +499,6 @@ const App: React.FC = () => {
   };
 
   const handleSystemLogout = async () => {
-    // For admin/driver
     setIsLoggedIn(false); setCurrentUser(null); setIsAdmin(false);
     try { localStorage.removeItem(MOCK_CURRENT_USER_KEY); } catch(e) {}
     setToast({ message: t('logout'), type: 'success' });
@@ -567,7 +509,6 @@ const App: React.FC = () => {
     const input = (credential_input || '').trim();
     const pass = (password_input || '').trim();
 
-    // 1. Check for Admin/Driver (Mock System)
     if (input.toLowerCase() === ADMIN_USERNAME.toLowerCase() && pass === ADMIN_PASSWORD) {
         const user = { username: ADMIN_USERNAME, isAdmin: true };
         setIsLoggedIn(true); setCurrentUser(ADMIN_USERNAME); setIsAdmin(true);
@@ -588,7 +529,6 @@ const App: React.FC = () => {
         return true;
     }
 
-    // 2. Supabase Login
     const { data, error } = await supabase.auth.signInWithPassword({
         email: input,
         password: pass
@@ -629,7 +569,6 @@ const App: React.FC = () => {
     }
 
     if (data.user) {
-        // Create Profile
         const { error: profileError } = await supabase.from('profiles').insert([
             { id: data.user.id, name: name, phone: phone, email: email, image: '' }
         ]);
@@ -646,7 +585,8 @@ const App: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       setIsUploading(true);
-      const url = await uploadImage(file, 'profiles');
+      const compressedFile = await compressImage(file);
+      const url = await uploadImage(compressedFile, 'profiles');
       if (url) {
         setProfileUploadedImage(url);
         setToast({ message: 'Profile image uploaded!', type: 'success' });
@@ -686,8 +626,6 @@ const App: React.FC = () => {
   };
   
   const handleDeleteAccount = async () => {
-      // NOTE: Deleting user from Supabase client requires SERVICE_ROLE key or server-side function usually.
-      // We will sign out and clear local state for now.
       if (!window.confirm(t('deleteConfirm'))) return;
       await handleUserLogout();
       setToast({ message: 'Account signed out.', type: 'success' });
@@ -699,12 +637,10 @@ const App: React.FC = () => {
     if (adminLoginType === 'admin') {
       if (username.toLowerCase() === ADMIN_USERNAME.toLowerCase() && password === ADMIN_PASSWORD) {
           const user = { username: ADMIN_USERNAME, isAdmin: true };
-          // Set state immediately
           setIsLoggedIn(true); 
           setCurrentUser(ADMIN_USERNAME); 
           setIsAdmin(true);
           setUserData(null);
-          
           try { localStorage.setItem(MOCK_CURRENT_USER_KEY, JSON.stringify(user)); } catch (e) {}
           setToast({ message: `Welcome, ${ADMIN_USERNAME}!`, type: 'success' });
           setIsAdminLoginOpen(false);
@@ -718,7 +654,6 @@ const App: React.FC = () => {
         setCurrentUser(DRIVER_USERNAME); 
         setIsAdmin(false);
         setUserData(null);
-        
         try { localStorage.setItem(MOCK_CURRENT_USER_KEY, JSON.stringify(user)); } catch (e) {}
         setToast({ message: `Welcome Driver!`, type: 'success' });
         setIsAdminLoginOpen(false);
@@ -758,14 +693,12 @@ const App: React.FC = () => {
     if (cart.length === 0) return;
     let prefillName = '';
     let prefillPhone = '';
-    
     if (userData) {
         prefillName = userData.name;
         prefillPhone = userData.phone;
     } else if (currentUser) {
         prefillName = currentUser;
     }
-
     setCheckoutData({
         name: prefillName,
         phone: prefillPhone,
@@ -798,7 +731,6 @@ const App: React.FC = () => {
           location: checkoutData.lat ? { lat: checkoutData.lat, lng: checkoutData.lng } : undefined
       }
     };
-
     const { error } = await supabase.from('orders').insert([
        {
            id: newOrder.id,
@@ -814,13 +746,11 @@ const App: React.FC = () => {
            user_id: userData?.uid || null
        }
     ]);
-
     if (error) {
         console.error("Order error", error);
         setToast({ message: 'Failed to place order', type: 'error' });
         return;
     }
-
     setToast({ message: `Order placed! ID: ${orderId}`, type: 'success' });
     setCart([]); 
     setIsCartOpen(false); 
@@ -829,22 +759,18 @@ const App: React.FC = () => {
     setTrackedOrder(orderId);
   };
 
-  // Google Maps Location Logic
   const handleGeoLocation = () => {
     setIsLocating(true);
     setToast({ message: t('enableGPS') as string, type: 'success' }); 
-
     if ('geolocation' in navigator) {
         const options = {
             enableHighAccuracy: true,
             timeout: 10000,
             maximumAge: 0
         };
-
         navigator.geolocation.getCurrentPosition((position) => {
             const { latitude, longitude } = position.coords;
             const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-            
             setCheckoutData(prev => ({
                 ...prev,
                 lat: latitude,
@@ -903,10 +829,10 @@ const App: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       setIsUploading(true);
-      const url = await uploadImage(file, 'products');
+      const compressedFile = await compressImage(file);
+      const url = await uploadImage(compressedFile, 'products');
       if (url) {
         setUploadedImage(url);
-        // Also update the form preview immediately by setting the input method to file but treating uploadedImage as the source
         setToast({ message: 'Image uploaded successfully!', type: 'success' });
       } else {
         setToast({ message: 'Failed to upload image.', type: 'error' });
@@ -915,9 +841,48 @@ const App: React.FC = () => {
     }
   };
 
+  const handleSliderFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setIsUploading(true);
+      const compressedFile = await compressImage(file);
+      const url = await uploadImage(compressedFile, 'slider');
+      if (url) {
+        setSliderUploadedImage(url);
+        setToast({ message: 'Slider image uploaded!', type: 'success' });
+      } else {
+         setToast({ message: 'Failed to upload slider image.', type: 'error' });
+      }
+      setIsUploading(false);
+    }
+  };
+
+  const handleAddSliderImage = () => {
+    if (sliderInputMethod === 'url' && newSliderImage.trim()) {
+      const updatedImages = [...heroImages, newSliderImage.trim()];
+      setHeroImages(updatedImages);
+      localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
+      setNewSliderImage('');
+      setToast({ message: 'Slider image added', type: 'success' });
+    } else if (sliderInputMethod === 'file' && sliderUploadedImage) {
+      const updatedImages = [...heroImages, sliderUploadedImage];
+      setHeroImages(updatedImages);
+      localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
+      setSliderUploadedImage(null);
+      setToast({ message: 'Slider image uploaded', type: 'success' });
+    }
+  };
+
+  const handleDeleteSliderImage = (index: number) => {
+    const updatedImages = heroImages.filter((_, i) => i !== index);
+    setHeroImages(updatedImages);
+    localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
+    setToast({ message: 'Slider image removed', type: 'success' });
+  };
+
   const handleSaveProduct = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isUploading) return; // Prevent save during upload
+    if (isUploading) return;
 
     const fd = new FormData(e.currentTarget);
     const imageToSave = (imageInputMethod === 'file' && uploadedImage) 
@@ -972,51 +937,11 @@ const App: React.FC = () => {
     setIsProductModalOpen(true);
   };
 
-  // -- Slider Image Handlers --
-  const handleSliderFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setIsUploading(true);
-      const url = await uploadImage(file, 'slider');
-      if (url) {
-        setSliderUploadedImage(url);
-        setToast({ message: 'Slider image uploaded!', type: 'success' });
-      } else {
-         setToast({ message: 'Failed to upload slider image.', type: 'error' });
-      }
-      setIsUploading(false);
-    }
-  };
-
-  const handleAddSliderImage = () => {
-    if (sliderInputMethod === 'url' && newSliderImage.trim()) {
-      const updatedImages = [...heroImages, newSliderImage.trim()];
-      setHeroImages(updatedImages);
-      localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
-      setNewSliderImage('');
-      setToast({ message: 'Slider image added', type: 'success' });
-    } else if (sliderInputMethod === 'file' && sliderUploadedImage) {
-      const updatedImages = [...heroImages, sliderUploadedImage];
-      setHeroImages(updatedImages);
-      localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
-      setSliderUploadedImage(null);
-      setToast({ message: 'Slider image uploaded', type: 'success' });
-    }
-  };
-
-  const handleDeleteSliderImage = (index: number) => {
-    const updatedImages = heroImages.filter((_, i) => i !== index);
-    setHeroImages(updatedImages);
-    localStorage.setItem('food_morocco_slider_images', JSON.stringify(updatedImages));
-    setToast({ message: 'Slider image removed', type: 'success' });
-  };
-
   const Navbar = () => (
     <nav className="sticky top-0 z-50 w-full bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border-b border-stone-100 dark:border-stone-800 shadow-sm transition-colors duration-300">
-      <div className="container mx-auto px-2 lg:px-6 py-2 lg:py-4 flex items-center justify-between gap-2 lg:gap-4">
+      <div className="container mx-auto px-4 lg:px-6 py-2 lg:py-4 flex items-center justify-between gap-2 lg:gap-4">
         <div className="flex-shrink-0 flex items-center cursor-pointer group select-none" onClick={() => setView('home')}>
-             <img src="/logo.png" alt="Logo" className="h-14 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" onError={(e) => e.currentTarget.style.display = 'none'} />
-             <span className="md:hidden font-black text-orange-600 dark:text-orange-500 ml-2">Sabores del Magreb</span>
+             <img src="/logo.png" alt="Food Morocco" className="h-16 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md" onError={(e) => e.currentTarget.style.display = 'none'} />
         </div>
         <div className="hidden md:flex flex-1 justify-center">
           <div className="flex items-center p-1 lg:p-2 bg-white dark:bg-stone-800 rounded-full border border-stone-100 dark:border-stone-700 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05)] transition-colors duration-300">
@@ -1090,7 +1015,6 @@ const App: React.FC = () => {
             </button>
           </Tooltip>
 
-          {/* Mobile Menu Button */}
           <button 
             className="md:hidden p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-200 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -1100,7 +1024,6 @@ const App: React.FC = () => {
         </div>
       </div>
       
-      {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-[100%] left-0 w-full bg-white dark:bg-stone-900 shadow-xl border-b border-stone-100 dark:border-stone-800 p-4 flex flex-col gap-2 z-40 animate-fade-in">
             {[{ id: 'home', label: t('home') }, { id: 'menu', label: t('menu') }, { id: 'track', label: t('track') }, { id: 'about', label: t('about') }, { id: 'contact', label: t('contact') }].map((link) => (
@@ -1121,13 +1044,11 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 dark:text-stone-100 pb-20 md:pb-0 font-sans text-stone-900 transition-colors duration-300" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <Navbar />
 
-      <main className="container mx-auto px-2 lg:px-4 py-4 lg:py-6 space-y-8">
-        {/* ... existing views ... */}
+      <main className="container mx-auto px-4 lg:px-6 py-4 lg:py-6 space-y-8">
         {view === 'home' && (
            <>
              <HeroSlider onOrderClick={() => setView('menu')} t={t} lang={language} images={heroImages} />
              
-             {/* Most Ordered Section */}
              <div className="mt-8">
                 <h2 className="text-2xl md:text-3xl font-black text-stone-900 dark:text-white mb-6 flex items-center gap-2">
                    <Flame className="text-orange-500 fill-orange-500" /> {t('mostOrdered')}
@@ -1259,11 +1180,9 @@ const App: React.FC = () => {
            </div>
         )}
 
-        {/* Profile Page */}
         {view === 'profile' && isLoggedIn && (
           <div className="max-w-4xl mx-auto space-y-8">
-             {/* Profile Header */}
-             <div className="bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-sm dark:border dark:border-stone-800 flex flex-col md:flex-row items-center gap-6">
+             <div className="bg-white dark:bg-stone-900 rounded-3xl p-5 md:p-8 shadow-sm dark:border dark:border-stone-800 flex flex-col md:flex-row items-center gap-6">
                 <div className="relative">
                     {userData?.image ? (
                         <img src={userData.image} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-stone-800 shadow-lg" />
@@ -1335,7 +1254,6 @@ const App: React.FC = () => {
                 </div>
              </div>
 
-             {/* Loyalty Program Card */}
              <div className="bg-gradient-to-r from-red-600 to-orange-500 rounded-3xl p-8 shadow-lg text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-y-10 translate-x-10 blur-xl"></div>
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -1369,7 +1287,6 @@ const App: React.FC = () => {
                 </div>
              </div>
 
-             {/* Favorites Section */}
              <div>
                 <h3 className="text-xl font-black mb-6 flex items-center gap-2 text-stone-900 dark:text-white">
                    <Heart className="fill-red-500 text-red-500" /> {t('favorites')}
@@ -1399,8 +1316,7 @@ const App: React.FC = () => {
                 )}
              </div>
 
-             {/* My Orders Section */}
-             <div className="bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-sm dark:border dark:border-stone-800 mt-8">
+             <div className="bg-white dark:bg-stone-900 rounded-3xl p-5 md:p-8 shadow-sm dark:border dark:border-stone-800 mt-8">
                 <h3 className="text-xl font-black mb-6 flex items-center gap-2 text-stone-900 dark:text-white">
                    <ShoppingBag className="text-orange-500" /> {t('myOrders')}
                 </h3>
@@ -1409,18 +1325,18 @@ const App: React.FC = () => {
                      <table className="w-full text-sm text-left">
                         <thead className="bg-stone-50 dark:bg-stone-800 text-stone-500 dark:text-stone-400">
                           <tr>
-                             <th className="px-6 py-3 rounded-s-xl">{t('orderId')}</th>
-                             <th className="px-6 py-3">{t('date')}</th>
-                             <th className="px-6 py-3">{t('status')}</th>
-                             <th className="px-6 py-3 rounded-e-xl">{t('total')}</th>
+                             <th className="px-3 md:px-6 py-3 rounded-s-xl">{t('orderId')}</th>
+                             <th className="px-3 md:px-6 py-3">{t('date')}</th>
+                             <th className="px-3 md:px-6 py-3">{t('status')}</th>
+                             <th className="px-3 md:px-6 py-3 rounded-e-xl">{t('total')}</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                            {orders.filter(o => o.customer === currentUser || o.customer === 'guest').map(order => (
                              <tr key={order.id} className="hover:bg-stone-50 dark:hover:bg-stone-800 transition">
-                                <td className="px-6 py-4 font-bold text-stone-900 dark:text-white">{order.id}</td>
-                                <td className="px-6 py-4 text-stone-600 dark:text-stone-400">{order.date}</td>
-                                <td className="px-6 py-4">
+                                <td className="px-3 md:px-6 py-4 font-bold text-stone-900 dark:text-white">{order.id}</td>
+                                <td className="px-3 md:px-6 py-4 text-stone-600 dark:text-stone-400">{order.date}</td>
+                                <td className="px-3 md:px-6 py-4">
                                   <span className={`px-2 py-1 rounded-lg text-xs font-bold ${
                                     order.status === 'completed' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' :
                                     order.status === 'delivering' ? 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400' :
@@ -1437,7 +1353,7 @@ const App: React.FC = () => {
                                     )}
                                   </span>
                                 </td>
-                                <td className="px-6 py-4 font-bold text-orange-600 dark:text-orange-400">{order.total} {t('currency')}</td>
+                                <td className="px-3 md:px-6 py-4 font-bold text-orange-600 dark:text-orange-400">{order.total} {t('currency')}</td>
                              </tr>
                            ))}
                         </tbody>
@@ -1449,8 +1365,7 @@ const App: React.FC = () => {
              </div>
           </div>
         )}
-
-        {/* ... rest of the component (Track, Admin, Driver, etc.) ... */}
+        
         {view === 'track' && (
           <div className="max-w-2xl mx-auto text-center space-y-8 py-10">
              <div className="space-y-4">
@@ -1470,14 +1385,13 @@ const App: React.FC = () => {
              </div>
              
              {trackingResult && trackingResult !== 'not_found' && (
-               <div className="bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-xl animate-fade-in-up border dark:border-stone-700">
+               <div className="bg-white dark:bg-stone-800 p-5 md:p-8 rounded-3xl shadow-xl animate-fade-in-up border dark:border-stone-700">
                   <div className="flex justify-between items-center mb-8">
                      <span className="font-bold text-lg dark:text-white">{t('orderId')}: {trackedOrder}</span>
                      <span className="px-4 py-2 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 rounded-full font-bold text-sm">
                         {t(trackingResult === 'pending' ? 'statusPending' : trackingResult === 'preparing' ? 'statusPreparing' : trackingResult === 'delivering' ? 'statusDelivering' : 'statusCompleted' as any)}
                      </span>
                   </div>
-                  {/* Stepper */}
                   <div className="relative flex justify-between">
                      {['pending', 'preparing', 'delivering', 'completed'].map((step, idx) => {
                         const statusOrder = ['pending', 'preparing', 'delivering', 'completed'];
@@ -1506,7 +1420,6 @@ const App: React.FC = () => {
                      </div>
                   </div>
 
-                  {/* Confirmation Code Section */}
                   {orders.find(o => o.id.toLowerCase() === trackedOrder.toLowerCase().trim()) && (
                       <div className="mt-8 p-6 bg-stone-50 dark:bg-stone-700/50 rounded-2xl border border-stone-100 dark:border-stone-600">
                           <p className="text-sm text-stone-500 dark:text-stone-400 mb-2 font-bold">{t('confirmationCode')}</p>
@@ -1523,7 +1436,6 @@ const App: React.FC = () => {
         
         {view === 'admin' && isAdmin && (
           <div className="flex flex-col md:flex-row gap-6 min-h-[80vh]">
-            {/* Admin Sidebar Navigation */}
             <div className="w-full md:w-64 bg-white dark:bg-stone-900 rounded-3xl p-4 h-fit shadow-sm border border-stone-100 dark:border-stone-800 flex flex-col">
                <div className="space-y-2 flex-1">
                   <button onClick={() => setAdminTab('overview')} className={`w-full text-start px-4 py-3 rounded-xl font-bold flex items-center gap-3 transition-colors ${adminTab === 'overview' ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900' : 'text-stone-500 hover:text-stone-50 dark:hover:bg-stone-800'}`}>
@@ -1551,10 +1463,7 @@ const App: React.FC = () => {
                </div>
             </div>
 
-            {/* Admin Content Area */}
             <div className="flex-1 space-y-6">
-               
-               {/* OVERVIEW TAB */}
                {adminTab === 'overview' && (
                   <>
                      <h2 className="text-3xl font-black dark:text-white mb-6">{t('dashboard')}</h2>
@@ -1592,7 +1501,6 @@ const App: React.FC = () => {
                   </>
                )}
 
-               {/* PRODUCTS TAB */}
                {adminTab === 'products' && (
                   <div>
                      <div className="flex justify-between items-center mb-6">
@@ -1619,7 +1527,6 @@ const App: React.FC = () => {
                   </div>
                )}
 
-               {/* ORDERS TAB */}
                {adminTab === 'orders' && (
                   <div>
                      <h2 className="text-3xl font-black dark:text-white mb-6">{t('orders')}</h2>
@@ -1628,22 +1535,22 @@ const App: React.FC = () => {
                             <table className="w-full text-sm text-left">
                               <thead className="bg-stone-50 dark:bg-stone-700 text-stone-500 dark:text-stone-400">
                                  <tr>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('orderId')}</th>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('date')}</th>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('username')}</th>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('phone')}</th>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('status')}</th>
-                                    <th className="px-6 py-4 whitespace-nowrap">{t('total')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('orderId')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('date')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('username')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('phone')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('status')}</th>
+                                    <th className="px-3 md:px-6 py-4 whitespace-nowrap">{t('total')}</th>
                                  </tr>
                               </thead>
                               <tbody className="divide-y divide-stone-100 dark:divide-stone-700">
                                 {orders.map(order => (
                                   <tr key={order.id} className="hover:bg-stone-50 dark:hover:bg-stone-700/50 transition">
-                                     <td className="px-6 py-4 whitespace-nowrap font-bold dark:text-white">{order.id}</td>
-                                     <td className="px-6 py-4 whitespace-nowrap text-stone-500">{order.date}</td>
-                                     <td className="px-6 py-4 whitespace-nowrap font-medium dark:text-stone-200">{order.customer}</td>
-                                     <td className="px-6 py-4 whitespace-nowrap text-stone-500">{order.deliveryInfo?.phone || '-'}</td>
-                                     <td className="px-6 py-4 whitespace-nowrap">
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap font-bold dark:text-white">{order.id}</td>
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap text-stone-500">{order.date}</td>
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap font-medium dark:text-stone-200">{order.customer}</td>
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap text-stone-500">{order.deliveryInfo?.phone || '-'}</td>
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap">
                                         <select 
                                           value={order.status}
                                           onChange={(e) => updateOrderStatus(order.id, e.target.value)}
@@ -1654,7 +1561,7 @@ const App: React.FC = () => {
                                            ))}
                                         </select>
                                      </td>
-                                     <td className="px-6 py-4 whitespace-nowrap font-bold text-orange-600 dark:text-orange-400">{order.total} {t('currency')}</td>
+                                     <td className="px-3 md:px-6 py-4 whitespace-nowrap font-bold text-orange-600 dark:text-orange-400">{order.total} {t('currency')}</td>
                                   </tr>
                                 ))}
                               </tbody>
@@ -1664,7 +1571,6 @@ const App: React.FC = () => {
                   </div>
                )}
 
-               {/* SETTINGS TAB */}
                {adminTab === 'settings' && (
                   <div>
                      <h2 className="text-3xl font-black dark:text-white mb-6">{t('settings')}</h2>
@@ -1738,7 +1644,6 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Driver Portal */}
         {view === 'driver' && (
            <div className="max-w-2xl mx-auto py-10">
               <h2 className="text-3xl font-black dark:text-white mb-2 text-center">{t('driverPortal')}</h2>
@@ -1825,7 +1730,6 @@ const App: React.FC = () => {
 
       </main>
       
-      {/* Checkout Modal */}
       {isCheckoutModalOpen && (
          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="bg-white dark:bg-stone-900 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-scale-in">
@@ -1897,7 +1801,6 @@ const App: React.FC = () => {
          </div>
       )}
 
-      {/* Cart Drawer */}
       {isCartOpen && (
          <div className="fixed inset-0 z-50 flex justify-end">
             <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
@@ -1971,7 +1874,6 @@ const App: React.FC = () => {
          </div>
       )}
 
-      {/* Auth Modal (User) */}
       {isAuthModalOpen && (
          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
              <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-md animate-scale-in">
@@ -2015,7 +1917,6 @@ const App: React.FC = () => {
          </div>
       )}
 
-      {/* Admin/Driver Login Modal */}
       {isAdminLoginOpen && (
           <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
              <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-md animate-scale-in">
@@ -2048,7 +1949,6 @@ const App: React.FC = () => {
           </div>
       )}
       
-      {/* Product Modal */}
       {isProductModalOpen && (
          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-2xl animate-scale-in max-h-[90vh] overflow-y-auto">
@@ -2109,10 +2009,8 @@ const App: React.FC = () => {
          </div>
       )}
 
-      {/* Floating Elements */}
       <AiChef menuItems={menuItems} />
       
-      {/* Toast Notification */}
       {toast && (
         <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-fade-in-down ${toast.type === 'success' ? 'bg-stone-900 text-white' : 'bg-red-600 text-white'}`}>
            {toast.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
