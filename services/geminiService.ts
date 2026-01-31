@@ -15,8 +15,10 @@ const getAIClient = () => {
 export const getMenuRecommendation = async (userQuery: string, menuItems: MenuItem[]): Promise<string> => {
   const client = getAIClient();
   
+  // Safety check, though API_KEY is assumed valid per guidelines
   if (!client) {
-    return "Lo siento, el servicio de asistente inteligente no está disponible actualmente (Falta API Key).";
+    console.error("Gemini API Client could not be initialized.");
+    return "Lo siento, el servicio no está disponible en este momento.";
   }
 
   const menuContext = menuItems.map(item => `${item.name} (${item.category}): ${item.description}`).join('\n');
@@ -30,22 +32,22 @@ export const getMenuRecommendation = async (userQuery: string, menuItems: MenuIt
     - Habla en español con un tono cálido y acogedor (puedes usar jerga marroquí ligera si aplica, como 'amigo' o 'bienvenido').
     - Sugiere solo una o dos comidas.
     - Explica por qué elegiste esa comida basándote en el deseo del cliente (ej: si quiere algo picante, sugiere los Tacos).
-    - Sé breve (no más de 50 palabras).
-    - Usa algunos emojis apropiados para la comida.
+    - Sé breve (máximo 60 palabras).
   `;
 
   try {
     const response = await client.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: 'gemini-3-flash-preview',
       contents: userQuery,
       config: {
         systemInstruction: systemInstruction,
       }
     });
-
-    return response.text || "No pude encontrar una recomendación exacta, ¡pero nuestro menú está lleno de opciones deliciosas!";
+    
+    // In @google/genai v1.x, .text is a getter property
+    return response.text || "Lo siento, no pude encontrar una recomendación adecuada.";
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "Tuve un pequeño problema de conexión, ¡puedes explorar el menú tú mismo!";
+    console.error("Error getting menu recommendation:", error);
+    return "Lo siento, tuve un problema técnico. Por favor intenta de nuevo.";
   }
 };

@@ -1124,7 +1124,6 @@ const App: React.FC = () => {
              <a href='https://azrogo.com/extras/upload-images/' target='_blank' rel="noreferrer" className="relative z-10">
                  <img 
                    src='https://cdn.jsdelivr.net/gh/imagesloads/images@main/img_1a6f0c9dc172c3fb.webp' 
-                   border='0' 
                    alt='eee' 
                    className="h-14 md:h-20 w-auto object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-2 drop-shadow-xl z-10 relative" 
                    onError={(e) => {

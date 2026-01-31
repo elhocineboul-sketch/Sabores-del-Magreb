@@ -10,7 +10,10 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     define: {
       // Securely replace process.env.API_KEY with the actual value during build
-      'process.env.API_KEY': JSON.stringify(env.API_KEY)
+      'process.env.API_KEY': JSON.stringify(env.API_KEY),
+      // Expose Supabase keys via process.env to avoid import.meta issues
+      'process.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL),
+      'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY)
     }
   };
 });
