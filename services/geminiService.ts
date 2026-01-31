@@ -5,9 +5,9 @@ let ai: GoogleGenAI | null = null;
 
 const getAIClient = () => {
   if (!ai) {
-    // Guidelines require strictly using process.env.API_KEY directly
+    // Guidelines require strictly using process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' directly
     // and assuming it is pre-configured and valid.
-    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'FAKE_API_KEY_FOR_DEVELOPMENT' });
   }
   return ai;
 };
@@ -16,21 +16,21 @@ export const getMenuRecommendation = async (userQuery: string, menuItems: MenuIt
   const client = getAIClient();
   
   if (!client) {
-    return "Lo siento, el servicio de asistente inteligente no está disponible actualmente (Falta API Key).";
+    return "Lo siento, el servicio de asistente inteligente no estÃ¡ disponible actualmente (Falta API Key).";
   }
 
   const menuContext = menuItems.map(item => `${item.name} (${item.category}): ${item.description}`).join('\n');
 
   const systemInstruction = `
     Eres un camarero inteligente y amable en el restaurante "Sabor del Magreb".
-    Aquí está nuestro menú:
+    AquÃ­ estÃ¡ nuestro menÃº:
     ${menuContext}
 
     Tu tarea es ayudar al cliente a elegir una comida basada en su solicitud.
-    - Habla en español con un tono cálido y acogedor (puedes usar jerga marroquí ligera si aplica, como 'amigo' o 'bienvenido').
+    - Habla en espaÃ±ol con un tono cÃ¡lido y acogedor (puedes usar jerga marroquÃ­ ligera si aplica, como 'amigo' o 'bienvenido').
     - Sugiere solo una o dos comidas.
-    - Explica por qué elegiste esa comida basándote en el deseo del cliente (ej: si quiere algo picante, sugiere los Tacos).
-    - Sé breve (no más de 50 palabras).
+    - Explica por quÃ© elegiste esa comida basÃ¡ndote en el deseo del cliente (ej: si quiere algo picante, sugiere los Tacos).
+    - SÃ© breve (no mÃ¡s de 50 palabras).
     - Usa algunos emojis apropiados para la comida.
   `;
 
@@ -43,9 +43,9 @@ export const getMenuRecommendation = async (userQuery: string, menuItems: MenuIt
       }
     });
 
-    return response.text || "No pude encontrar una recomendación exacta, ¡pero nuestro menú está lleno de opciones deliciosas!";
+    return response.text || "No pude encontrar una recomendaciÃ³n exacta, Â¡pero nuestro menÃº estÃ¡ lleno de opciones deliciosas!";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "Tuve un pequeño problema de conexión, ¡puedes explorar el menú tú mismo!";
+    return "Tuve un pequeÃ±o problema de conexiÃ³n, Â¡puedes explorar el menÃº tÃº mismo!";
   }
 };
