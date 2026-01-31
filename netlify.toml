@@ -1,7 +1,0 @@
-[build]
-  command = "sed -i 's|REPLACE_WITH_API_KEY|'\"$API_KEY\"'|g' index.html"
-  publish = "."
-
-[dev]
-  command = "npm start"
-  port = 3000
