@@ -7,6 +7,20 @@
     <title>Sabor del Magreb</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Babel Standalone for browser-side JSX compilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Environment Variable Shim for Netlify -->
+    <script>
+      window.process = {
+        env: {
+          // The string below is replaced by netlify.toml during deployment
+          API_KEY: "REPLACE_WITH_API_KEY"
+        }
+      };
+    </script>
+
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -70,5 +84,7 @@
 </head>
   <body class="bg-stone-50 text-stone-800 dark:bg-stone-950 dark:text-stone-100 transition-colors duration-300">
     <div id="root"></div>
+    <!-- Entry point using Babel to compile JSX -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
