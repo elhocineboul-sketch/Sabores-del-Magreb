@@ -155,7 +155,7 @@ const translations = {
     codeInstruction: 'Entrega este código al conductor al recibir tu pedido',
     loyaltyProgram: 'Programa de Lealtad',
     loyaltyDesc: '¡Pide 10 comidas y recibe una comida para dos gratis!',
-    ordersCount: 'Order Count',
+    ordersCount: 'Recuento de Pedidos',
     rewardUnlocked: '¡Felicidades! ¡Ganaste una comida gratis! 🎉',
     rewardInstruction: 'Muestra esta pantalla al cajero en tu próximo pedido.',
     keepGoing: '¡Estás cerca! Sigue pidiendo.',
@@ -1147,13 +1147,6 @@ const App: React.FC = () => {
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-2 lg:gap-3">
-          <button onClick={toggleTheme} className="hidden md:flex p-2 lg:p-3 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition">
-             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <button onClick={cycleLanguage} className="hidden md:flex p-2 lg:p-3 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition">
-             <Globe size={20} />
-          </button>
-
           <Tooltip text={isAdmin ? t('dashboard') : t('adminAccess')}>
              <button onClick={() => isAdmin ? setView('admin') : setIsAdminLoginOpen(true)} className={`p-2 lg:p-3 rounded-full transition-all duration-300 group shadow-sm border dark:border-stone-700 ${view === 'admin' ? 'bg-red-600 text-white' : 'bg-white dark:bg-stone-800 hover:bg-red-50 dark:hover:bg-stone-700 dark:text-stone-200'}`}>{isAdmin ? <LayoutDashboard size={20} /> : <Lock size={20} />}</button>
           </Tooltip>
@@ -1938,339 +1931,283 @@ const App: React.FC = () => {
            </div>
         )}
 
-        {/* AiChef Component */}
-        <AiChef menuItems={menuItems} />
-
-        {/* Cart Drawer */}
-        {isCartOpen && (
-          <div className="fixed inset-0 z-[60] flex justify-end">
-             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
-             <div className="relative w-full max-w-md bg-white dark:bg-stone-900 h-full shadow-2xl flex flex-col animate-slide-in-right">
-                <div className="p-4 flex items-center justify-between border-b border-stone-100 dark:border-stone-800">
-                   <h2 className="text-xl font-black flex items-center gap-2 dark:text-white"><ShoppingBag className="text-orange-600"/> {t('cart')}</h2>
-                   <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full dark:text-white"><X size={20}/></button>
-                </div>
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                   {cart.length === 0 ? (
-                      <div className="text-center py-10 opacity-50">
-                         <ShoppingBag size={64} className="mx-auto mb-4 text-stone-300"/>
-                         <p className="font-bold dark:text-stone-400">{t('cartEmpty')}</p>
-                         <button onClick={() => { setIsCartOpen(false); setView('menu'); }} className="mt-4 text-orange-600 font-bold hover:underline">{t('browseMenu')}</button>
-                      </div>
-                   ) : (
-                      cart.map((item, idx) => (
-                         <div key={idx} className="flex gap-4 items-center bg-stone-50 dark:bg-stone-800 p-3 rounded-xl">
-                            <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover"/>
-                            <div className="flex-1">
-                               <h4 className="font-bold text-sm dark:text-white line-clamp-1">{item.name}</h4>
-                               <p className="text-orange-600 font-bold text-sm">{item.price * item.quantity} {t('currency')}</p>
-                            </div>
-                            <div className="flex items-center gap-2 bg-white dark:bg-stone-900 rounded-lg p-1 border dark:border-stone-700">
-                               <button onClick={() => {
-                                  const newCart = [...cart];
-                                  if(newCart[idx].quantity > 1) {
-                                     newCart[idx].quantity--;
-                                     setCart(newCart);
-                                  } else {
-                                     setCart(cart.filter((_, i) => i !== idx));
-                                  }
-                               }} className="p-1 hover:bg-stone-100 dark:hover:bg-stone-800 rounded dark:text-white"><Minus size={14}/></button>
-                               <span className="font-bold w-6 text-center text-sm dark:text-white">{item.quantity}</span>
-                               <button onClick={() => {
-                                  const newCart = [...cart];
-                                  newCart[idx].quantity++;
-                                  setCart(newCart);
-                               }} className="p-1 hover:bg-stone-100 dark:hover:bg-stone-800 rounded dark:text-white"><Plus size={14}/></button>
-                            </div>
-                         </div>
-                      ))
-                   )}
-                </div>
-                {cart.length > 0 && (
-                   <div className="p-4 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/50">
-                      <div className="flex justify-between items-center mb-4">
-                         <span className="font-bold text-stone-500 dark:text-stone-400">{t('total')}</span>
-                         <span className="text-2xl font-black text-stone-900 dark:text-white">{cart.reduce((a, b) => a + (b.price * b.quantity), 0)} {t('currency')}</p>
-                      </div>
-                      <button onClick={handleInitiateCheckout} className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 transition flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">
-                         {t('checkout')} <ArrowRight size={18}/>
-                      </button>
-                   </div>
-                )}
-             </div>
-          </div>
-        )}
-
-        {/* Auth Modal */}
-        {isAuthModalOpen && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAuthModalOpen(false)}></div>
-             <div className="relative w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl shadow-2xl overflow-hidden animate-scale-in">
-                <div className="p-8">
-                   <div className="text-center mb-8">
-                      <h2 className="text-3xl font-black text-stone-900 dark:text-white mb-2">{loginMode === 'login' ? t('welcomeBack') : t('joinUs')}</h2>
-                      <p className="text-stone-500 dark:text-stone-400">{loginMode === 'login' ? 'Enter your details to access your account' : 'Create your account to start ordering'}</p>
-                   </div>
-                   
-                   <form onSubmit={async (e) => {
-                      e.preventDefault();
-                      const fd = new FormData(e.currentTarget);
-                      if (loginMode === 'login') {
-                         await handleLogin(fd.get('email') as string, fd.get('password') as string);
-                      } else {
-                         await handleRegister(fd.get('name') as string, fd.get('phone') as string, fd.get('email') as string, fd.get('password') as string);
-                      }
-                   }} className="space-y-4">
-                      {loginMode === 'register' && (
-                         <>
-                           <div className="space-y-1">
-                              <label className="text-xs font-bold text-stone-500 ml-1">{t('namePlaceholder')}</label>
-                              <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                                 <UserIcon size={18} className="text-stone-400"/>
-                                 <input name="name" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="John Doe" />
-                              </div>
-                           </div>
-                           <div className="space-y-1">
-                              <label className="text-xs font-bold text-stone-500 ml-1">{t('phone')}</label>
-                              <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                                 <Phone size={18} className="text-stone-400"/>
-                                 <input name="phone" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="+212 6..." />
-                              </div>
-                           </div>
-                         </>
-                      )}
-                      <div className="space-y-1">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{loginMode === 'login' ? 'Email or Username' : t('email')}</label>
-                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                            <Mail size={18} className="text-stone-400"/>
-                            <input name="email" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="hello@example.com" />
-                         </div>
-                      </div>
-                      <div className="space-y-1">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{t('password')}</label>
-                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                            <Lock size={18} className="text-stone-400"/>
-                            <input name="password" type="password" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="••••••••" />
-                         </div>
-                      </div>
-
-                      <button type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-4 rounded-xl font-bold hover:opacity-90 transition shadow-lg mt-4">
-                         {loginMode === 'login' ? t('loginBtn') : t('registerBtn')}
-                      </button>
-                   </form>
-
-                   <div className="mt-6 text-center">
-                      <p className="text-stone-500 dark:text-stone-400 text-sm">
-                         {loginMode === 'login' ? t('noAccount') : t('haveAccount')} {' '}
-                         <button onClick={() => setLoginMode(loginMode === 'login' ? 'register' : 'login')} className="text-orange-600 font-bold hover:underline">
-                            {loginMode === 'login' ? t('registerNow') : t('loginBtn')}
-                         </button>
-                      </p>
-                   </div>
-                </div>
-             </div>
-          </div>
-        )}
-
-        {/* Admin Login Modal */}
-        {isAdminLoginOpen && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAdminLoginOpen(false)}></div>
-             <div className="relative w-full max-w-sm bg-white dark:bg-stone-900 rounded-3xl shadow-2xl p-6 animate-scale-in">
-                <h3 className="text-xl font-black mb-1 dark:text-white">{t('adminLoginTitle')}</h3>
-                <p className="text-sm text-stone-500 mb-6">{t('adminLoginDesc')}</p>
-                
-                <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-xl mb-6">
-                  <button 
-                    onClick={() => setAdminLoginType('admin')}
-                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'admin' ? 'bg-white dark:bg-stone-700 shadow-sm text-stone-900 dark:text-white' : 'text-stone-500'}`}
-                  >Admin</button>
-                  <button 
-                    onClick={() => setAdminLoginType('driver')}
-                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'driver' ? 'bg-white dark:bg-stone-700 shadow-sm text-stone-900 dark:text-white' : 'text-stone-500'}`}
-                  >Driver</button>
-                </div>
-
-                <form onSubmit={(e) => {
-                   e.preventDefault();
-                   const fd = new FormData(e.currentTarget);
-                   handleAdminLogin(fd.get('username') as string, fd.get('password') as string);
-                }} className="space-y-3">
-                   <input name="username" placeholder={t('username')} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                   <input name="password" type="password" placeholder={t('password')} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                   <button type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-3 rounded-xl font-bold hover:opacity-90">{t('loginBtn')}</button>
-                </form>
-             </div>
-          </div>
-        )}
-
-        {/* Checkout Modal */}
-        {isCheckoutModalOpen && (
-          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCheckoutModalOpen(false)}></div>
-             <div className="relative w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-                <div className="p-4 border-b border-stone-100 dark:border-stone-800 flex justify-between items-center">
-                   <h3 className="text-lg font-black dark:text-white">{t('checkoutTitle')}</h3>
-                   <button onClick={() => setIsCheckoutModalOpen(false)}><X size={20} className="text-stone-400"/></button>
-                </div>
-                <div className="p-6 overflow-y-auto">
-                   <form id="checkout-form" onSubmit={handleFinalizeCheckout} className="space-y-4">
-                      <div className="space-y-1">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{t('namePlaceholder')}</label>
-                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                            <UserIcon size={18} className="text-stone-400"/>
-                            <input 
-                               value={checkoutData.name} 
-                               onChange={e => setCheckoutData({...checkoutData, name: e.target.value})} 
-                               required 
-                               className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white" 
-                               placeholder="Your Name"
-                            />
-                         </div>
-                      </div>
-                      <div className="space-y-1">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{t('phone')}</label>
-                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
-                            <Phone size={18} className="text-stone-400"/>
-                            <input 
-                               value={checkoutData.phone} 
-                               onChange={e => setCheckoutData({...checkoutData, phone: e.target.value})} 
-                               required 
-                               className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white" 
-                               placeholder="+212..."
-                            />
-                         </div>
-                      </div>
-                      
-                      <div className="space-y-2 pt-2">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{t('deliveryAddress')}</label>
-                         <button 
-                           type="button" 
-                           onClick={handleGeoLocation} 
-                           className="w-full py-3 border-2 border-dashed border-orange-200 dark:border-orange-900/40 bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 rounded-xl font-bold hover:bg-orange-100 dark:hover:bg-orange-900/20 transition flex items-center justify-center gap-2"
-                           disabled={isLocating}
-                         >
-                            {isLocating ? <Loader2 className="animate-spin" size={18}/> : <MapPin size={18}/>}
-                            {isLocating ? t('locating') : t('locateMe')}
-                         </button>
-                         {checkoutData.mapLink && (
-                            <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-900/20 p-2 rounded-lg text-xs font-bold">
-                               <CheckCircle size={14}/> {t('locationFetched')}
-                            </div>
-                         )}
-                         <textarea 
-                            value={checkoutData.address} 
-                            onChange={e => setCheckoutData({...checkoutData, address: e.target.value})} 
-                            className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-500 min-h-[80px] font-bold text-sm dark:text-white"
-                            placeholder={t('addressPlaceholder') as string}
-                         />
-                      </div>
-                   </form>
-                </div>
-                <div className="p-4 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-900">
-                   <div className="flex justify-between items-center mb-4 text-sm">
-                      <span className="text-stone-500">{t('total')}</span>
-                      <span className="font-black text-xl dark:text-white">{cart.reduce((a, b) => a + (b.price * b.quantity), 0)} {t('currency')}</span>
-                   </div>
-                   <button form="checkout-form" type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-4 rounded-xl font-bold hover:opacity-90 transition shadow-lg">
-                      {t('confirmOrder')}
-                   </button>
-                </div>
-             </div>
-          </div>
-        )}
-
-        {/* Product Modal */}
-        {isProductModalOpen && (
-           <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
-               <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsProductModalOpen(false)}></div>
-               <div className="relative w-full max-w-2xl bg-white dark:bg-stone-900 rounded-3xl shadow-2xl p-6 md:p-8 animate-scale-in max-h-[90vh] overflow-y-auto">
-                  <div className="flex justify-between items-center mb-6">
-                     <h3 className="text-2xl font-black dark:text-white">{productForm.id ? t('editProduct') : t('addProduct')}</h3>
-                     <button onClick={() => setIsProductModalOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full dark:text-white"><X size={24}/></button>
-                  </div>
-                  
-                  <form onSubmit={handleSaveProduct} className="space-y-4">
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                           <label className="text-xs font-bold text-stone-500 ml-1">{t('productName')}</label>
-                           <input name="name" defaultValue={productForm.name} required className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                        </div>
-                        <div className="space-y-1">
-                           <label className="text-xs font-bold text-stone-500 ml-1">{t('productPrice')}</label>
-                           <input name="price" type="number" step="0.5" defaultValue={productForm.price} required className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                        </div>
-                     </div>
-
-                     <div className="space-y-1">
-                        <label className="text-xs font-bold text-stone-500 ml-1">{t('productCategory')}</label>
-                        <select name="category" defaultValue={productForm.category || 'burger'} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white">
-                           {CATEGORIES.filter(c => c.id !== 'all').map(c => (
-                              <option key={c.id} value={c.id}>{t(c.id as any)}</option>
-                           ))}
-                        </select>
-                     </div>
-
-                     <div className="space-y-2">
-                         <label className="text-xs font-bold text-stone-500 ml-1">{t('productImage')}</label>
-                         <div className="flex gap-2">
-                            <button type="button" onClick={() => setImageInputMethod('url')} className={`flex-1 py-2 rounded-lg text-sm font-bold ${imageInputMethod === 'url' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromUrl')}</button>
-                            <button type="button" onClick={() => setImageInputMethod('file')} className={`flex-1 py-2 rounded-lg text-sm font-bold ${imageInputMethod === 'file' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromDevice')}</button>
-                         </div>
-                         {imageInputMethod === 'url' ? (
-                            <input name="image" defaultValue={productForm.image} placeholder="https://..." className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                         ) : (
-                            <div className="relative h-20 bg-stone-50 dark:bg-stone-800 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-xl flex items-center justify-center text-stone-500 cursor-pointer hover:bg-stone-100 dark:hover:bg-stone-700/50 transition">
-                                 <input type="file" accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                                 <span className="font-bold flex items-center gap-2">
-                                    {isUploading ? <Loader2 className="animate-spin" /> : <Upload />}
-                                    {isUploading ? t('uploading') : (uploadedImage ? t('imageSource') : t('uploadText'))}
-                                 </span>
-                            </div>
-                         )}
-                     </div>
-
-                     <div className="space-y-1">
-                        <label className="text-xs font-bold text-stone-500 ml-1">{t('productDesc')}</label>
-                        <textarea name="description" defaultValue={productForm.description} rows={3} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
-                     </div>
-
-                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        <input name="calories" type="number" placeholder={t('calories')} defaultValue={productForm.calories} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
-                        <input name="spiciness" type="number" placeholder={t('spiciness')} defaultValue={productForm.spiciness} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
-                        <input name="protein" type="number" placeholder={t('protein')} defaultValue={productForm.protein} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
-                        <input name="carbs" type="number" placeholder={t('carbs')} defaultValue={productForm.carbs} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
-                     </div>
-
-                     <button type="submit" disabled={isUploading} className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 transition shadow-lg mt-4 disabled:opacity-50">
-                        {t('save')}
-                     </button>
-                  </form>
-               </div>
-           </div>
-        )}
-
-        {/* Toast Notification */}
-        {toast && (
-           <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in-down ${toast.type === 'success' ? 'bg-stone-900 text-white' : 'bg-red-600 text-white'}`}>
-              {toast.type === 'success' ? <CheckCircle size={18} className="text-green-400"/> : <AlertCircle size={18} className="text-white"/>}
-              <span className="font-bold text-sm">{toast.message}</span>
-           </div>
-        )}
-
       </main>
 
-      <footer className="mt-20 border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 pt-12 pb-24 md:pb-12 px-6">
-         <div className="container mx-auto text-center">
-            <h2 className="text-2xl font-black mb-4 dark:text-white">Sabor del Magreb</h2>
-            <div className="flex justify-center gap-6 mb-8 text-stone-400">
-               <Facebook className="hover:text-blue-600 cursor-pointer transition"/>
-               <Instagram className="hover:text-pink-600 cursor-pointer transition"/>
-               <Twitter className="hover:text-sky-500 cursor-pointer transition"/>
+      {/* Cart Sidebar */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-[60] flex justify-end">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
+          <div className="relative w-full max-w-md bg-white dark:bg-stone-900 h-full shadow-2xl p-6 overflow-y-auto border-l border-stone-100 dark:border-stone-800 flex flex-col animate-slide-in-right">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-black flex items-center gap-2 dark:text-white"><ShoppingBag className="text-orange-600" /> {t('cart')}</h2>
+              <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full dark:text-stone-400"><X size={24} /></button>
             </div>
-            <p className="text-stone-400 text-sm">© 2024 Sabor del Magreb. All rights reserved.</p>
+            
+            {cart.length === 0 ? (
+               <div className="flex-1 flex flex-col items-center justify-center text-stone-500 space-y-4">
+                  <ShoppingBag size={64} className="text-stone-300 dark:text-stone-700" />
+                  <p className="font-bold text-lg">{t('cartEmpty')}</p>
+                  <button onClick={() => { setIsCartOpen(false); setView('menu'); }} className="bg-orange-600 text-white px-6 py-2 rounded-xl font-bold">{t('browseMenu')}</button>
+               </div>
+            ) : (
+               <>
+                 <div className="flex-1 space-y-4">
+                    {cart.map((item, idx) => (
+                       <div key={`${item.id}-${idx}`} className="flex gap-4 items-center bg-stone-50 dark:bg-stone-800 p-3 rounded-2xl border border-stone-100 dark:border-stone-700">
+                          <img src={item.image} alt={item.name} className="w-16 h-16 rounded-xl object-cover" />
+                          <div className="flex-1">
+                             <h4 className="font-bold text-sm dark:text-white line-clamp-1">{item.name}</h4>
+                             <p className="text-orange-600 font-bold text-sm">{item.price * item.quantity} {t('currency')}</p>
+                             <div className="flex items-center gap-3 mt-1">
+                                <button onClick={() => {
+                                   const newCart = [...cart];
+                                   if (newCart[idx].quantity > 1) {
+                                      newCart[idx].quantity--;
+                                      setCart(newCart);
+                                   } else {
+                                      setCart(cart.filter((_, i) => i !== idx));
+                                   }
+                                }} className="p-1 bg-white dark:bg-stone-700 rounded-lg shadow-sm"><Minus size={14} className="dark:text-white" /></button>
+                                <span className="font-bold text-sm dark:text-white">{item.quantity}</span>
+                                <button onClick={() => {
+                                   const newCart = [...cart];
+                                   newCart[idx].quantity++;
+                                   setCart(newCart);
+                                }} className="p-1 bg-white dark:bg-stone-700 rounded-lg shadow-sm"><Plus size={14} className="dark:text-white" /></button>
+                             </div>
+                          </div>
+                          <button onClick={() => setCart(cart.filter((_, i) => i !== idx))} className="text-red-500 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"><Trash2 size={18} /></button>
+                       </div>
+                    ))}
+                 </div>
+                 <div className="mt-6 border-t border-stone-100 dark:border-stone-800 pt-6 space-y-4">
+                    <div className="flex justify-between items-center text-xl font-black dark:text-white">
+                       <span>{t('total')}</span>
+                       <span className="text-orange-600">{cart.reduce((sum, i) => sum + (i.price * i.quantity), 0)} {t('currency')}</span>
+                    </div>
+                    <button onClick={handleInitiateCheckout} className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-4 rounded-xl font-bold text-lg shadow-lg hover:bg-black dark:hover:bg-white/90 transition">{t('checkout')}</button>
+                 </div>
+               </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Checkout Modal */}
+      {isCheckoutModalOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCheckoutModalOpen(false)}></div>
+           <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 md:p-8 w-full max-w-lg relative z-10 shadow-2xl animate-scale-up border dark:border-stone-800">
+              <h2 className="text-2xl font-black mb-6 dark:text-white">{t('checkoutTitle')}</h2>
+              <form onSubmit={handleFinalizeCheckout} className="space-y-4">
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('namePlaceholder')}</label>
+                    <input required value={checkoutData.name} onChange={(e) => setCheckoutData({...checkoutData, name: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('phone')}</label>
+                    <input required value={checkoutData.phone} onChange={(e) => setCheckoutData({...checkoutData, phone: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('deliveryAddress')}</label>
+                    <textarea required value={checkoutData.address} onChange={(e) => setCheckoutData({...checkoutData, address: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 min-h-[100px]" placeholder={t('addressPlaceholder')} />
+                 </div>
+                 
+                 <button type="button" onClick={handleGeoLocation} disabled={isLocating} className="w-full py-3 border border-orange-200 dark:border-orange-900 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-orange-100 dark:hover:bg-orange-900/30 transition">
+                    {isLocating ? <Loader2 className="animate-spin" /> : <MapPin size={18} />} {isLocating ? t('locating') : t('locateMe')}
+                 </button>
+                 
+                 {checkoutData.mapLink && (
+                    <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-900/20 p-3 rounded-xl text-sm font-bold">
+                       <CheckCircle size={16} /> {t('locationFetched')}
+                    </div>
+                 )}
+
+                 <div className="flex gap-3 mt-6">
+                    <button type="button" onClick={() => setIsCheckoutModalOpen(false)} className="flex-1 py-3 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-xl font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition">{t('cancel')}</button>
+                    <button type="submit" className="flex-1 py-3 bg-orange-600 text-white rounded-xl font-bold hover:bg-orange-700 transition shadow-lg shadow-orange-600/20">{t('confirmOrder')}</button>
+                 </div>
+              </form>
+           </div>
+        </div>
+      )}
+
+      {/* Auth Modal */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAuthModalOpen(false)}></div>
+           <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 md:p-8 w-full max-w-md relative z-10 shadow-2xl animate-scale-up border dark:border-stone-800">
+              <div className="text-center mb-8">
+                 <h2 className="text-3xl font-black mb-2 dark:text-white">{loginMode === 'login' ? t('login') : t('register')}</h2>
+                 <p className="text-stone-500 dark:text-stone-400">{loginMode === 'login' ? t('welcomeBack') : t('joinUs')}</p>
+              </div>
+              
+              <form onSubmit={async (e) => {
+                 e.preventDefault();
+                 const fd = new FormData(e.currentTarget);
+                 if (loginMode === 'login') {
+                    await handleLogin(fd.get('credential') as string, fd.get('password') as string);
+                 } else {
+                    await handleRegister(fd.get('name') as string, fd.get('phone') as string, fd.get('email') as string, fd.get('password') as string);
+                 }
+              }} className="space-y-4">
+                 {loginMode === 'register' && (
+                    <>
+                       <div>
+                          <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('namePlaceholder')}</label>
+                          <input name="name" required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                       </div>
+                       <div>
+                          <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('phone')}</label>
+                          <input name="phone" required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                       </div>
+                    </>
+                 )}
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('email')}</label>
+                    <input name={loginMode === 'login' ? 'credential' : 'email'} required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('password')}</label>
+                    <input name="password" type="password" required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 
+                 <button type="submit" className="w-full py-3 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-xl font-bold hover:opacity-90 transition mt-4">{loginMode === 'login' ? t('loginBtn') : t('registerBtn')}</button>
+              </form>
+              
+              <div className="mt-6 text-center">
+                 <p className="text-stone-500 dark:text-stone-400 text-sm">
+                    {loginMode === 'login' ? t('noAccount') : t('haveAccount')}{' '}
+                    <button onClick={() => setLoginMode(loginMode === 'login' ? 'register' : 'login')} className="text-orange-600 font-bold hover:underline">
+                       {loginMode === 'login' ? t('registerNow') : t('loginBtn')}
+                    </button>
+                 </p>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* Admin Login Modal */}
+      {isAdminLoginOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAdminLoginOpen(false)}></div>
+           <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 md:p-8 w-full max-w-md relative z-10 shadow-2xl animate-scale-up border dark:border-stone-800">
+              <div className="text-center mb-6">
+                 <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Lock size={32} />
+                 </div>
+                 <h2 className="text-2xl font-black mb-2 dark:text-white">{t('adminLoginTitle')}</h2>
+              </div>
+
+              <div className="flex p-1 bg-stone-100 dark:bg-stone-800 rounded-xl mb-6">
+                 <button onClick={() => setAdminLoginType('admin')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${adminLoginType === 'admin' ? 'bg-white dark:bg-stone-700 shadow-sm' : 'text-stone-500'}`}>Admin</button>
+                 <button onClick={() => setAdminLoginType('driver')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${adminLoginType === 'driver' ? 'bg-white dark:bg-stone-700 shadow-sm' : 'text-stone-500'}`}>Driver</button>
+              </div>
+
+              <form onSubmit={(e) => {
+                 e.preventDefault();
+                 const fd = new FormData(e.currentTarget);
+                 handleAdminLogin(fd.get('username') as string, fd.get('password') as string);
+              }} className="space-y-4">
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('username')}</label>
+                    <input name="username" required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('password')}</label>
+                    <input name="password" type="password" required className="w-full px-4 py-3 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                 </div>
+                 <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition mt-4">{t('loginBtn')}</button>
+              </form>
+           </div>
+        </div>
+      )}
+
+      {/* Product Modal */}
+      {isProductModalOpen && (
+         <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsProductModalOpen(false)}></div>
+            <div className="bg-white dark:bg-stone-900 rounded-3xl p-6 md:p-8 w-full max-w-2xl relative z-10 shadow-2xl animate-scale-up border dark:border-stone-800 max-h-[90vh] overflow-y-auto">
+               <h2 className="text-2xl font-black mb-6 dark:text-white">{productForm.id ? t('editProduct') : t('addProduct')}</h2>
+               <form onSubmit={handleSaveProduct} className="grid md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                     <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('productName')}</label>
+                     <input name="name" defaultValue={productForm.name} required className="w-full px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                  </div>
+                  <div>
+                     <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('productPrice')}</label>
+                     <input name="price" type="number" defaultValue={productForm.price} required className="w-full px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                  </div>
+                  <div>
+                     <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('productCategory')}</label>
+                     <select name="category" defaultValue={productForm.category || 'burger'} className="w-full px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500">
+                        {CATEGORIES.filter(c => c.id !== 'all').map(c => (
+                           <option key={c.id} value={c.id}>{c.label}</option>
+                        ))}
+                     </select>
+                  </div>
+                  <div className="md:col-span-2">
+                     <label className="block text-sm font-bold text-stone-700 dark:text-stone-300 mb-1">{t('productDesc')}</label>
+                     <textarea name="description" defaultValue={productForm.description} required className="w-full px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500 h-20" />
+                  </div>
+                  
+                  <div className="md:col-span-2 space-y-2">
+                      <label className="block text-sm font-bold text-stone-700 dark:text-stone-300">{t('productImage')}</label>
+                      <div className="flex gap-2">
+                         <button type="button" onClick={() => setImageInputMethod('url')} className={`px-4 py-1.5 rounded-lg text-sm font-bold ${imageInputMethod === 'url' ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900' : 'bg-stone-100 dark:bg-stone-800 text-stone-500'}`}>{t('fromUrl')}</button>
+                         <button type="button" onClick={() => setImageInputMethod('file')} className={`px-4 py-1.5 rounded-lg text-sm font-bold ${imageInputMethod === 'file' ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900' : 'bg-stone-100 dark:bg-stone-800 text-stone-500'}`}>{t('fromDevice')}</button>
+                      </div>
+                      
+                      {imageInputMethod === 'url' ? (
+                          <input name="image" defaultValue={productForm.image} placeholder="https://..." className="w-full px-4 py-2 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 dark:text-white outline-none focus:ring-2 focus:ring-orange-500" />
+                      ) : (
+                          <div className="relative h-12 bg-stone-50 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-xl flex items-center justify-center text-stone-500 cursor-pointer hover:bg-stone-100 dark:hover:bg-stone-700 transition">
+                             <input type="file" accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                             <span className="text-sm font-bold flex items-center gap-2">
+                                {isUploading ? <Loader2 className="animate-spin" size={14} /> : <Upload size={14} />}
+                                {isUploading ? t('uploading') : (uploadedImage ? t('imageSource') : t('uploadText'))}
+                             </span>
+                          </div>
+                      )}
+                  </div>
+
+                  <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-stone-100 dark:border-stone-800 mt-2">
+                     <div>
+                        <label className="block text-xs font-bold text-stone-500 mb-1">{t('calories')}</label>
+                        <input name="calories" type="number" defaultValue={productForm.calories} className="w-full px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 dark:text-white" />
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-stone-500 mb-1">{t('spiciness')}</label>
+                        <input name="spiciness" type="number" defaultValue={productForm.spiciness} className="w-full px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 dark:text-white" />
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-stone-500 mb-1">{t('protein')}</label>
+                        <input name="protein" type="number" defaultValue={productForm.protein} className="w-full px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 dark:text-white" />
+                     </div>
+                     <div>
+                        <label className="block text-xs font-bold text-stone-500 mb-1">{t('carbs')}</label>
+                        <input name="carbs" type="number" defaultValue={productForm.carbs} className="w-full px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 dark:text-white" />
+                     </div>
+                  </div>
+
+                  <div className="md:col-span-2 flex gap-3 mt-4">
+                     <button type="button" onClick={() => setIsProductModalOpen(false)} className="flex-1 py-2 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-xl font-bold">{t('cancel')}</button>
+                     <button type="submit" disabled={isUploading} className="flex-1 py-2 bg-orange-600 text-white rounded-xl font-bold hover:bg-orange-700">{t('save')}</button>
+                  </div>
+               </form>
+            </div>
          </div>
-      </footer>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-24 right-4 z-[100] px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-slide-in-right ${toast.type === 'success' ? 'bg-stone-900 text-white dark:bg-white dark:text-stone-900' : 'bg-red-600 text-white'}`}>
+           {toast.type === 'success' ? <CheckCircle size={20} className="text-green-400 dark:text-green-600" /> : <AlertCircle size={20} />}
+           <span className="font-bold">{toast.message}</span>
+        </div>
+      )}
+
+      <AiChef menuItems={menuItems} />
     </div>
   );
 };
