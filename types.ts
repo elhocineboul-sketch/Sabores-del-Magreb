@@ -1,5 +1,5 @@
 
-export type Category = 'all' | 'burger' | 'tacos' | 'pizza' | 'drinks' | 'desserts';
+export type Category = 'all' | 'burger' | 'pizza' | 'drinks' | 'shawarma' | 'kebab';
 
 export interface MenuItem {
   id: string;

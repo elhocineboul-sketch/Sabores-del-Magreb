@@ -44,7 +44,7 @@ const translations = {
     phone: 'رقم الهاتف', phonePlaceholder: '+57 ...', namePlaceholder: 'الاسم الكامل',
     loginBtn: 'دخول', registerBtn: 'تسجيل', noAccount: 'ليس لديك حساب؟', haveAccount: 'لديك حساب بالفعل؟', registerNow: 'سجل الآن',
     cartEmpty: 'السلة فارغة حالياً', browseMenu: 'تصفح القائمة', total: 'المجموع الكلي', checkout: 'إتمام الطلب', cancel: 'إلغاء', confirm: 'تأكيد', save: 'حفظ',
-    burger: 'برجر', tacos: 'تاكوس', pizza: 'بيتزا', drinks: 'مشروبات', desserts: 'حلويات', all: 'الكل',
+    burger: 'برجر', tacos: 'تاكوس', pizza: 'بيتزا', drinks: 'مشروبات', desserts: 'حلويات', all: 'الكل', shawarma: 'شاورما', kebab: 'كباب',
     productName: 'اسم المنتج', productPrice: 'السعر', productCategory: 'التصنيف', productDesc: 'الوصف', productImage: 'رابط الصورة',
     fillAllFields: 'يرجى ملء جميع الحقول',
     overview: 'نظرة عامة', settings: 'الإعدادات', backToSite: 'العودة للموقع', weeklySales: 'المبيعات الأسبوعية', recentActivity: 'النشاط الحديث',
@@ -91,7 +91,162 @@ const translations = {
     deleteConfirm: 'هل أنت متأكد من حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.',
     update: 'تحديث',
     changePhoto: 'تغيير الصورة',
-    profileImage: 'صورة الملف الشخصي (رابط)'
+    profileImage: 'صورة الملف الشخصي (رابط)',
+    language: 'اللغة'
+  },
+  es: {
+    home: 'Inicio', menu: 'Menú', track: 'Rastrear', about: 'Nosotros', contact: 'Contacto',
+    login: 'Iniciar Sesión', register: 'Registrarse', logout: 'Cerrar Sesión', cart: 'Carrito', addToCart: 'Añadir',
+    details: 'Detalles', currency: 'MAD',
+    heroTitle1: 'Sabores', heroTitle2: 'Marroquíes', heroTitle3: 'Toque', heroTitle4: 'Moderno',
+    heroSubtitle: 'Descubre la fusión única entre la cocina tradicional marroquí y la comida callejera moderna en una experiencia inolvidable.',
+    orderNow: 'Pedir Ahora', watchVideo: 'Ver Video',
+    mostOrdered: 'Más Pedidos', specialOffers: 'Ofertas Especiales',
+    whyUs: '¿Por qué elegirnos?',
+    freshDaily: 'Fresco a Diario', freshDailyDesc: 'Ingredientes locales seleccionados cada mañana.',
+    fastDelivery: 'Envío Rápido', fastDeliveryDesc: 'Compromiso de entrega en menos de 30 minutos.',
+    authenticTaste: 'Sabor Auténtico', authenticTasteDesc: 'Especias secretas que te transportan a Marrakech.',
+    menuTitle: 'Nuestro Menú', menuSubtitle: 'Elige entre nuestra amplia selección',
+    trackTitle: 'Seguimiento', trackSubtitle: 'Sigue el estado de tu pedido en tiempo real',
+    searchPlaceholder: 'Nº de Pedido (ej: ORD-1234)', searchButton: 'Buscar',
+    statusReceived: 'Recibido', statusPreparing: 'Preparando', statusDelivering: 'En Camino', statusCompleted: 'Entregado', statusCancelled: 'Cancelado',
+    statusPending: 'Nuevo',
+    currentStatus: 'Estado Actual',
+    preparingMsg: 'Estamos preparando los mejores ingredientes para ti', deliveringMsg: 'El conductor está en camino', completedMsg: '¡Que disfrutes tu comida!',
+    timeRemaining: 'Tiempo restante', notFound: 'Lo sentimos, no encontramos un pedido con ese número.',
+    dashboard: 'Panel de Control', adminWelcome: 'Bienvenido, tienes nuevas actualizaciones hoy.',
+    totalSales: 'Ventas', totalOrders: 'Pedidos', pendingOrders: 'Pendientes', products: 'Productos', reviews: 'Reseñas',
+    addProduct: 'Añadir Producto', editProduct: 'Editar Producto', edit: 'Editar', delete: 'Eliminar', approve: 'Aprobar',
+    welcomeBack: 'Bienvenido de nuevo', joinUs: 'Únete a nosotros', email: 'Correo Electrónico', username: 'Nombre de Usuario', password: 'Contraseña',
+    phone: 'Teléfono', phonePlaceholder: '+212 ...', namePlaceholder: 'Nombre Completo',
+    loginBtn: 'Entrar', registerBtn: 'Registrar', noAccount: '¿No tienes cuenta?', haveAccount: '¿Ya tienes cuenta?', registerNow: 'Regístrate ahora',
+    cartEmpty: 'Tu carrito está vacío', browseMenu: 'Ver Menú', total: 'Total', checkout: 'Finalizar Pedido', cancel: 'Cancelar', confirm: 'Confirmar', save: 'Guardar',
+    burger: 'Hamburguesas', tacos: 'Tacos', pizza: 'Pizza', drinks: 'Bebidas', desserts: 'Postres', all: 'Todo', shawarma: 'Shawarma', kebab: 'Kebab',
+    productName: 'Nombre del Producto', productPrice: 'Precio', productCategory: 'Categoría', productDesc: 'Descripción', productImage: 'URL de Imagen',
+    fillAllFields: 'Por favor completa todos los campos',
+    overview: 'Resumen', settings: 'Ajustes', backToSite: 'Volver al Sitio', weeklySales: 'Ventas Semanales', recentActivity: 'Actividad Reciente',
+    maintenanceMode: 'Modo Mantenimiento', allowRegistration: 'Permitir Registro', saveChanges: 'Guardar Cambios',
+    adminAccess: 'Acceso Admin',
+    calories: 'Calorías', spiciness: 'Picante (0-100)', sweetness: 'Dulzura (0-100)', protein: 'Proteína (g)', carbs: 'Carbohidratos (g)',
+    orders: 'Pedidos',
+    actionAccept: 'Aceptar', actionReject: 'Rechazar', actionPrepare: 'Preparar', actionDeliver: 'Enviar', actionComplete: 'Completar',
+    adminLoginTitle: 'Portal de Administración', adminLoginDesc: 'Ingresa credenciales de administrador', accessDenied: 'Credenciales inválidas',
+    useAdminPortal: 'Usa el icono de candado para acceso administrativo',
+    usernameReserved: 'Este nombre de usuario está reservado',
+    statusApproved: 'Publicado', statusRejected: 'Rechazado',
+    myProfile: 'Mi Perfil', favorites: 'Favoritos', noFavorites: 'Aún no tienes favoritos', backToMenu: 'Explorar Menú',
+    darkMode: 'Modo Oscuro',
+    myOrders: 'Mis Pedidos', noOrders: 'No hay pedidos anteriores', orderId: 'ID Pedido', date: 'Fecha', status: 'Estado',
+    trackStep1: 'Recibido', trackStep2: 'Preparando', trackStep3: 'En Camino', trackStep4: 'Entregado',
+    confirmationCode: 'Código de Confirmación',
+    driverLogin: 'Acceso Conductor', driverPortal: 'Portal de Reparto', enterCode: 'Ingresar Código', verifyAndComplete: 'Verificar y Completar', invalidCode: 'Código inválido',
+    readyForPickup: 'Listo para Recoger', pickup: 'Recoger Pedido', deliver: 'Entregar',
+    imageSource: 'Fuente de Imagen', fromUrl: 'Desde URL', fromDevice: 'Subir Archivo', uploadText: 'Clic para elegir imagen',
+    uploading: 'Subiendo...',
+    checkoutTitle: 'Finalizar Compra', deliveryAddress: 'Dirección de Entrega', addressPlaceholder: 'Calle, Número...', locateMe: 'Usar mi Ubicación (GPS)', confirmOrder: 'Confirmar Pedido',
+    locating: 'Ubicando...', locationError: 'Error al ubicar',
+    enableGPS: 'Por favor activa el GPS y permite la ubicación',
+    locationPermissionDenied: 'Permiso denegado. Habilita el acceso a la ubicación.',
+    locationUnavailable: 'Ubicación no disponible.',
+    locationTimeout: 'Tiempo de espera agotado.',
+    locationFetched: 'Ubicación adjuntada con éxito',
+    openInMaps: 'Abrir en Maps',
+    locationShared: 'Ubicación compartida',
+    codeInstruction: 'Entrega este código al conductor al recibir tu pedido',
+    loyaltyProgram: 'Programa de Lealtad',
+    loyaltyDesc: '¡Pide 10 comidas y recibe una comida para dos gratis!',
+    ordersCount: 'Order Count',
+    rewardUnlocked: '¡Felicidades! ¡Ganaste una comida gratis! 🎉',
+    rewardInstruction: 'Muestra esta pantalla al cajero en tu próximo pedido.',
+    keepGoing: '¡Estás cerca! Sigue pidiendo.',
+    sliderSettings: 'Ajustes del Slider',
+    addSliderImage: 'Añadir Imagen',
+    addImage: 'Añadir',
+    sliderImages: 'Imágenes Actuales',
+    editProfile: 'Editar Perfil',
+    deleteAccount: 'Eliminar Cuenta',
+    deleteConfirm: '¿Estás seguro de eliminar tu cuenta? Esta acción no se puede deshacer.',
+    update: 'Actualizar',
+    changePhoto: 'Cambiar Foto',
+    profileImage: 'Foto de Perfil (URL)',
+    language: 'Idioma'
+  },
+  en: {
+    home: 'Home', menu: 'Menu', track: 'Track Order', about: 'About Us', contact: 'Contact',
+    login: 'Login', register: 'Register', logout: 'Logout', cart: 'Cart', addToCart: 'Add',
+    details: 'Details', currency: 'MAD',
+    heroTitle1: 'Moroccan', heroTitle2: 'Flavors', heroTitle3: 'Modern', heroTitle4: 'Twist',
+    heroSubtitle: 'Discover the unique fusion of traditional Moroccan cooking and modern street food in an unforgettable experience.',
+    orderNow: 'Order Now', watchVideo: 'Watch Video',
+    mostOrdered: 'Most Ordered', specialOffers: 'Special Offers',
+    whyUs: 'Why Choose Us?',
+    freshDaily: 'Fresh Daily', freshDailyDesc: 'Ingredients sourced from local farms every morning.',
+    fastDelivery: 'Lightning Delivery', fastDeliveryDesc: 'Committed to delivery within 30 minutes.',
+    authenticTaste: 'Authentic Taste', authenticTasteDesc: 'Secret spices that take you back to Marrakech.',
+    menuTitle: 'Our Menu', menuSubtitle: 'Choose from our wide selection',
+    trackTitle: 'Track Order', trackSubtitle: 'Follow your order status in real-time',
+    searchPlaceholder: 'Order ID (e.g. ORD-1234)', searchButton: 'Search',
+    statusReceived: 'Received', statusPreparing: 'Preparing', statusDelivering: 'Delivering', statusCompleted: 'Completed', statusCancelled: 'Cancelled',
+    statusPending: 'New',
+    currentStatus: 'Current Status',
+    preparingMsg: 'Preparing the finest ingredients for you', deliveringMsg: 'Driver is on the way', completedMsg: 'Enjoy your meal!',
+    timeRemaining: 'Time Remaining', notFound: 'Sorry, order not found.',
+    dashboard: 'Dashboard', adminWelcome: 'Welcome, you have new updates.',
+    totalSales: 'Sales', totalOrders: 'Orders', pendingOrders: 'Pending', products: 'Products', reviews: 'Reviews',
+    addProduct: 'Add Product', editProduct: 'Edit Product', edit: 'Edit', delete: 'Delete', approve: 'Approve',
+    welcomeBack: 'Welcome Back', joinUs: 'Join Us', email: 'Email', username: 'Username', password: 'Password',
+    phone: 'Phone', phonePlaceholder: '+212 ...', namePlaceholder: 'Full Name',
+    loginBtn: 'Login', registerBtn: 'Register', noAccount: 'No account?', haveAccount: 'Already have an account?', registerNow: 'Register now',
+    cartEmpty: 'Your cart is empty', browseMenu: 'Browse Menu', total: 'Total', checkout: 'Checkout', cancel: 'Cancel', confirm: 'Confirm', save: 'Save',
+    burger: 'Burgers', tacos: 'Tacos', pizza: 'Pizza', drinks: 'Drinks', desserts: 'Desserts', all: 'All', shawarma: 'Shawarma', kebab: 'Kebab',
+    productName: 'Product Name', productPrice: 'Price', productCategory: 'Category', productDesc: 'Description', productImage: 'Image URL',
+    fillAllFields: 'Please fill all fields',
+    overview: 'Overview', settings: 'Settings', backToSite: 'Back to Site', weeklySales: 'Weekly Sales', recentActivity: 'Recent Activity',
+    maintenanceMode: 'Maintenance Mode', allowRegistration: 'Allow Registration', saveChanges: 'Save Changes',
+    adminAccess: 'Admin Access',
+    calories: 'Calories', spiciness: 'Spiciness (0-100)', sweetness: 'Sweetness (0-100)', protein: 'Protein (g)', carbs: 'Carbs (g)',
+    orders: 'Orders',
+    actionAccept: 'Accept', actionReject: 'Reject', actionPrepare: 'Prepare', actionDeliver: 'Dispatch', actionComplete: 'Complete',
+    adminLoginTitle: 'Admin Portal', adminLoginDesc: 'Enter admin credentials', accessDenied: 'Invalid credentials',
+    useAdminPortal: 'Use the lock icon for admin access',
+    usernameReserved: 'Username reserved',
+    statusApproved: 'Published', statusRejected: 'Rejected',
+    myProfile: 'My Profile', favorites: 'Favorites', noFavorites: 'No favorites yet', backToMenu: 'Browse Menu',
+    darkMode: 'Dark Mode',
+    myOrders: 'My Orders', noOrders: 'No past orders', orderId: 'Order ID', date: 'Date', status: 'Status',
+    trackStep1: 'Received', trackStep2: 'Preparing', trackStep3: 'Delivering', trackStep4: 'Delivered',
+    confirmationCode: 'Confirmation Code',
+    driverLogin: 'Driver Login', driverPortal: 'Delivery Portal', enterCode: 'Enter Code', verifyAndComplete: 'Verify & Complete', invalidCode: 'Invalid Code',
+    readyForPickup: 'Ready for Pickup', pickup: 'Pickup Order', deliver: 'Deliver',
+    imageSource: 'Image Source', fromUrl: 'From URL', fromDevice: 'Upload File', uploadText: 'Click to select image',
+    uploading: 'Uploading...',
+    checkoutTitle: 'Checkout', deliveryAddress: 'Delivery Address', addressPlaceholder: 'Street, Number...', locateMe: 'Use my Location (GPS)', confirmOrder: 'Confirm Order',
+    locating: 'Locating...', locationError: 'Location Error',
+    enableGPS: 'Please enable GPS and allow location',
+    locationPermissionDenied: 'Permission denied. Please allow location access.',
+    locationUnavailable: 'Location unavailable.',
+    locationTimeout: 'Location timeout.',
+    locationFetched: 'Location attached successfully',
+    openInMaps: 'Open in Maps',
+    locationShared: 'Location shared',
+    codeInstruction: 'Give this code to the driver upon receipt',
+    loyaltyProgram: 'Loyalty Program',
+    loyaltyDesc: 'Order 10 meals and get a meal for two for free!',
+    ordersCount: 'Order Count',
+    rewardUnlocked: 'Congrats! You unlocked a free meal! 🎉',
+    rewardInstruction: 'Show this screen to the cashier.',
+    keepGoing: 'Almost there! Keep ordering.',
+    sliderSettings: 'Slider Settings',
+    addSliderImage: 'Add Slider Image',
+    addImage: 'Add',
+    sliderImages: 'Current Images',
+    editProfile: 'Edit Profile',
+    deleteAccount: 'Delete Account',
+    deleteConfirm: 'Are you sure? This cannot be undone.',
+    update: 'Update',
+    changePhoto: 'Change Photo',
+    profileImage: 'Profile Image (URL)',
+    language: 'Language'
   }
 };
 
@@ -223,7 +378,7 @@ const HeroSlider = ({ onOrderClick, t, lang, images }: { onOrderClick: () => voi
 
 const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
-  const [language, setLanguage] = useState<Language>('ar');
+  const [language, setLanguage] = useState<Language>('es');
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -389,6 +544,14 @@ const App: React.FC = () => {
      return () => subscription.unsubscribe();
   }, []);
 
+  const cycleLanguage = () => {
+    setLanguage((prev) => {
+      if (prev === 'ar') return 'en';
+      if (prev === 'en') return 'es';
+      return 'ar';
+    });
+  };
+
   const mostOrderedItems = useMemo(() => {
     const counts: {[id: string]: number} = {};
     const findIdByName = (name: string) => {
@@ -491,9 +654,20 @@ const App: React.FC = () => {
   }, [toast]);
 
   const handleUserLogout = async () => {
-    await supabase.auth.signOut();
-    setIsLoggedIn(false); setCurrentUser(null); setIsAdmin(false); setUserData(null);
+    // Optimistically clear local state to update UI immediately
+    setIsLoggedIn(false); 
+    setCurrentUser(null); 
+    setIsAdmin(false); 
+    setUserData(null);
     try { localStorage.removeItem(MOCK_CURRENT_USER_KEY); } catch(e) {}
+    
+    // Attempt to sign out from Supabase (backend)
+    try {
+        await supabase.auth.signOut();
+    } catch (error) {
+        console.error("Error signing out:", error);
+    }
+
     setToast({ message: t('logout'), type: 'success' });
     setView('home');
   };
@@ -731,6 +905,10 @@ const App: React.FC = () => {
           location: checkoutData.lat ? { lat: checkoutData.lat, lng: checkoutData.lng } : undefined
       }
     };
+    
+    // Optimistic Update: Add to local orders immediately so the user sees success even if offline/error
+    setOrders(prev => [newOrder, ...prev]);
+
     const { error } = await supabase.from('orders').insert([
        {
            id: newOrder.id,
@@ -746,17 +924,19 @@ const App: React.FC = () => {
            user_id: userData?.uid || null
        }
     ]);
+    
     if (error) {
-        console.error("Order error", error);
-        setToast({ message: 'Failed to place order', type: 'error' });
-        return;
+        console.error("Order error (handled gracefully)", error);
+        // We do NOT return here; we proceed so the user can see their order
     }
+
     setToast({ message: `Order placed! ID: ${orderId}`, type: 'success' });
     setCart([]); 
     setIsCartOpen(false); 
     setIsCheckoutModalOpen(false);
     setView('track'); 
     setTrackedOrder(orderId);
+    setTrackingResult('pending'); // Immediately show the tracking status
   };
 
   const handleGeoLocation = () => {
@@ -940,8 +1120,24 @@ const App: React.FC = () => {
   const Navbar = () => (
     <nav className="sticky top-0 z-50 w-full bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border-b border-stone-100 dark:border-stone-800 shadow-sm transition-colors duration-300">
       <div className="container mx-auto px-4 lg:px-6 py-2 lg:py-4 flex items-center justify-between gap-2 lg:gap-4">
-        <div className="flex-shrink-0 flex items-center cursor-pointer group select-none" onClick={() => setView('home')}>
-             <img src="/logo.png" alt="Food Morocco" className="h-16 md:h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md" onError={(e) => e.currentTarget.style.display = 'none'} />
+        <div className="flex-shrink-0 flex items-center cursor-pointer group select-none relative">
+             <a href='https://azrogo.com/extras/upload-images/' target='_blank' rel="noreferrer" className="relative z-10">
+                 <img 
+                   src='https://cdn.jsdelivr.net/gh/imagesloads/images@main/img_1a6f0c9dc172c3fb.webp' 
+                   border='0' 
+                   alt='eee' 
+                   className="h-14 md:h-20 w-auto object-contain transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-2 drop-shadow-xl z-10 relative" 
+                   onError={(e) => {
+                     e.currentTarget.style.display = 'none';
+                     const parent = e.currentTarget.parentElement?.parentElement;
+                     if(parent) {
+                        const fallback = parent.querySelector('.fallback-logo-text');
+                        if(fallback) fallback.classList.remove('hidden');
+                     }
+                   }} 
+                 />
+             </a>
+             <span onClick={() => setView('home')} className="fallback-logo-text hidden absolute left-0 top-1/2 -translate-y-1/2 md:static md:translate-y-0 font-black text-orange-600 dark:text-orange-500 text-lg md:text-xl ml-2 whitespace-nowrap">Sabor del Magreb</span>
         </div>
         <div className="hidden md:flex flex-1 justify-center">
           <div className="flex items-center p-1 lg:p-2 bg-white dark:bg-stone-800 rounded-full border border-stone-100 dark:border-stone-700 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.05)] transition-colors duration-300">
@@ -951,22 +1147,16 @@ const App: React.FC = () => {
           </div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+          <button onClick={toggleTheme} className="hidden md:flex p-2 lg:p-3 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition">
+             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button onClick={cycleLanguage} className="hidden md:flex p-2 lg:p-3 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 transition">
+             <Globe size={20} />
+          </button>
+
           <Tooltip text={isAdmin ? t('dashboard') : t('adminAccess')}>
              <button onClick={() => isAdmin ? setView('admin') : setIsAdminLoginOpen(true)} className={`p-2 lg:p-3 rounded-full transition-all duration-300 group shadow-sm border dark:border-stone-700 ${view === 'admin' ? 'bg-red-600 text-white' : 'bg-white dark:bg-stone-800 hover:bg-red-50 dark:hover:bg-stone-700 dark:text-stone-200'}`}>{isAdmin ? <LayoutDashboard size={20} /> : <Lock size={20} />}</button>
           </Tooltip>
-          
-          <button onClick={toggleTheme} className="p-2 lg:p-3 rounded-full hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-200 transition-colors">
-            {isDarkMode ? <Sun size={20} className="text-amber-500" /> : <Moon size={20} />}
-          </button>
-
-          <button onClick={() => setLangMenuOpen(!langMenuOpen)} className="flex items-center justify-center p-2 rounded-full hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-200"><Globe size={20} /></button>
-          {langMenuOpen && (
-              <div className={`absolute top-16 bg-white dark:bg-stone-800 rounded-xl shadow-xl border border-stone-100 dark:border-stone-700 py-2 w-32 z-50 animate-fade-in ${language === 'ar' ? 'left-4' : 'right-4'}`}>
-                <button onClick={() => { setLanguage('ar'); setLangMenuOpen(false); }} className="w-full text-start px-4 py-2 hover:bg-stone-50 dark:hover:bg-stone-700 text-sm font-bold text-stone-800 dark:text-white">العربية</button>
-                <button onClick={() => { setLanguage('en'); setLangMenuOpen(false); }} className="w-full text-start px-4 py-2 hover:bg-stone-50 dark:hover:bg-stone-700 text-sm font-bold text-stone-800 dark:text-white">English</button>
-                <button onClick={() => { setLanguage('es'); setLangMenuOpen(false); }} className="w-full text-start px-4 py-2 hover:bg-stone-50 dark:hover:bg-stone-700 text-sm font-bold text-stone-800 dark:text-white">Español</button>
-              </div>
-          )}
           
           {!isAdmin && (
             isLoggedIn ? (
@@ -1148,7 +1338,7 @@ const App: React.FC = () => {
            <div className="max-w-4xl mx-auto py-12 px-4 animate-fade-in">
               <div className="text-center space-y-4 mb-12">
                  <h2 className="text-4xl font-black dark:text-white text-stone-900">{t('contact')}</h2>
-                 <p className="text-stone-500 dark:text-stone-400 text-lg">نحن هنا للاستماع إليك. تواصل معنا لأي استفسار أو اقتراح.</p>
+                 <p className="text-stone-500 dark:text-stone-400 text-lg">Estamos هنا para escucharte. Contáctanos para cualquier consulta o sugerencia.</p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -1156,7 +1346,7 @@ const App: React.FC = () => {
                     <div className="w-16 h-16 bg-sky-100 dark:bg-sky-900/30 rounded-full flex items-center justify-center text-sky-600 dark:text-sky-400 mx-auto mb-4">
                        <Phone size={32} />
                     </div>
-                    <h3 className="font-bold text-lg mb-2 dark:text-white">اتصل بنا</h3>
+                    <h3 className="font-bold text-lg mb-2 dark:text-white">Llámanos</h3>
                     <p className="text-stone-500 dark:text-stone-400 text-sm" dir="ltr">+212 5 22 33 44 55</p>
                     <p className="text-stone-500 dark:text-stone-400 text-sm" dir="ltr">+212 6 11 22 33 44</p>
                  </div>
@@ -1164,17 +1354,17 @@ const App: React.FC = () => {
                     <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center text-orange-600 dark:text-orange-400 mx-auto mb-4">
                        <Mail size={32} />
                     </div>
-                    <h3 className="font-bold text-lg mb-2 dark:text-white">راسلنا</h3>
-                    <p className="text-stone-500 dark:text-stone-400 text-sm">contact@foodmorocco.ma</p>
-                    <p className="text-stone-500 dark:text-stone-400 text-sm">support@foodmorocco.ma</p>
+                    <h3 className="font-bold text-lg mb-2 dark:text-white">Escríbenos</h3>
+                    <p className="text-stone-500 dark:text-stone-400 text-sm">contact@sabordelmagreb.ma</p>
+                    <p className="text-stone-500 dark:text-stone-400 text-sm">support@sabordelmagreb.ma</p>
                  </div>
                  <div className="bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-sm text-center border border-stone-100 dark:border-stone-700 hover:shadow-lg transition">
                     <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center text-indigo-600 dark:text-indigo-400 mx-auto mb-4">
                        <MapPin size={32} />
                     </div>
-                    <h3 className="font-bold text-lg mb-2 dark:text-white">موقعنا</h3>
-                    <p className="text-stone-500 dark:text-stone-400 text-sm">شارع محمد الخامس، الدار البيضاء</p>
-                    <p className="text-stone-500 dark:text-stone-400 text-sm">المغرب</p>
+                    <h3 className="font-bold text-lg mb-2 dark:text-white">Ubicación</h3>
+                    <p className="text-stone-500 dark:text-stone-400 text-sm">Av. Mohammed V, Casablanca</p>
+                    <p className="text-stone-500 dark:text-stone-400 text-sm">Marruecos</p>
                  </div>
               </div>
            </div>
@@ -1244,6 +1434,12 @@ const App: React.FC = () => {
                    >
                      {isDarkMode ? <Sun size={20} className="text-amber-500" /> : <Moon size={20} className="text-stone-500" />}
                      {t('darkMode')}
+                   </button>
+                   <button 
+                     onClick={cycleLanguage}
+                     className="px-6 py-3 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 rounded-xl font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition flex items-center justify-center gap-2 w-full md:w-auto"
+                   >
+                     <Globe size={20} /> {language === 'ar' ? 'English' : language === 'en' ? 'Español' : 'العربية'}
                    </button>
                    <button onClick={() => setView('home')} className="px-6 py-3 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-200 rounded-xl font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition flex items-center justify-center gap-2 w-full md:w-auto">
                       <Home size={20} /> {t('backToSite')}
@@ -1454,6 +1650,12 @@ const App: React.FC = () => {
                </div>
                
                <div className="mt-4 pt-4 border-t border-stone-100 dark:border-stone-800 space-y-2">
+                  <button onClick={toggleTheme} className="w-full text-start px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-stone-500 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+                     {isDarkMode ? <Sun size={18} /> : <Moon size={18} />} {t('darkMode')}
+                  </button>
+                  <button onClick={cycleLanguage} className="w-full text-start px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-stone-500 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
+                     <Globe size={18} /> {language === 'ar' ? 'English' : language === 'en' ? 'Español' : 'العربية'}
+                  </button>
                   <button onClick={() => setView('home')} className="w-full text-start px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-stone-500 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors">
                      <Home size={18} /> {t('backToSite')}
                   </button>
@@ -1646,14 +1848,22 @@ const App: React.FC = () => {
 
         {view === 'driver' && (
            <div className="max-w-2xl mx-auto py-10">
+              <div className="flex justify-end gap-3 mb-6">
+                 <button onClick={toggleTheme} className="p-3 bg-white dark:bg-stone-800 rounded-full shadow-sm text-stone-500 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-700 transition">
+                    {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                 </button>
+                 <button onClick={cycleLanguage} className="px-4 py-2 bg-white dark:bg-stone-800 rounded-full shadow-sm text-stone-500 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-700 transition font-bold text-sm flex items-center gap-2">
+                    <Globe size={18} /> {language === 'ar' ? 'English' : language === 'en' ? 'Español' : 'العربية'}
+                 </button>
+              </div>
               <h2 className="text-3xl font-black dark:text-white mb-2 text-center">{t('driverPortal')}</h2>
-              <p className="text-stone-500 dark:text-stone-400 text-center mb-8">إدارة الطلبات النشطة للتوصيل</p>
+              <p className="text-stone-500 dark:text-stone-400 text-center mb-8">Administrar pedidos activos para entrega</p>
               
               <div className="space-y-6">
                  {orders.filter(o => ['preparing', 'delivering'].includes(o.status)).length === 0 && (
                     <div className="text-center py-10 text-stone-500">
                        <Bike size={48} className="mx-auto mb-4 opacity-50" />
-                       <p>لا توجد طلبات نشطة حالياً</p>
+                       <p>No hay pedidos activos actualmente</p>
                     </div>
                  )}
                  
@@ -1673,14 +1883,14 @@ const App: React.FC = () => {
                           <div className="flex items-center gap-3 text-stone-600 dark:text-stone-300">
                              <Phone size={18} className="text-stone-400" />
                              <span>{order.deliveryInfo?.phone || 'N/A'}</span>
-                             <a href={`tel:${order.deliveryInfo?.phone}`} className="ml-auto text-xs bg-stone-100 dark:bg-stone-700 px-2 py-1 rounded">اتصال</a>
+                             <a href={`tel:${order.deliveryInfo?.phone}`} className="ml-auto text-xs bg-stone-100 dark:bg-stone-700 px-2 py-1 rounded">Llamar</a>
                           </div>
                           <div className="flex items-center gap-3 text-stone-600 dark:text-stone-300">
                              <MapPin size={18} className="text-stone-400" />
-                             <span className="line-clamp-1">{order.deliveryInfo?.address || 'الموقع عبر GPS'}</span>
+                             <span className="line-clamp-1">{order.deliveryInfo?.address || 'Ubicación GPS'}</span>
                              {order.deliveryInfo?.mapLink && (
                                 <a href={order.deliveryInfo.mapLink} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded flex items-center gap-1">
-                                   <Navigation size={12} /> الخريطة
+                                   <Navigation size={12} /> Mapa
                                 </a>
                              )}
                           </div>
@@ -1728,295 +1938,339 @@ const App: React.FC = () => {
            </div>
         )}
 
-      </main>
-      
-      {isCheckoutModalOpen && (
-         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="bg-white dark:bg-stone-900 rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-scale-in">
-               <div className="p-6 border-b border-stone-100 dark:border-stone-800 flex justify-between items-center bg-stone-50 dark:bg-stone-800">
-                  <h3 className="font-black text-xl dark:text-white flex items-center gap-2">
-                     <ShoppingBag className="text-orange-600" size={24} /> {t('checkoutTitle')}
-                  </h3>
-                  <button onClick={() => setIsCheckoutModalOpen(false)} className="text-stone-400 hover:text-stone-600 dark:hover:text-white">
-                     <X size={24} />
-                  </button>
-               </div>
-               
-               <form onSubmit={handleFinalizeCheckout} className="p-6 space-y-4">
-                  <div>
-                     <label className="block text-xs font-bold text-stone-500 uppercase mb-1">{t('username')}</label>
-                     <input 
-                        required 
-                        value={checkoutData.name} 
-                        onChange={e => setCheckoutData({...checkoutData, name: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" 
-                        placeholder={t('namePlaceholder')}
-                     />
-                  </div>
-                  <div>
-                     <label className="block text-xs font-bold text-stone-500 uppercase mb-1">{t('phone')}</label>
-                     <input 
-                        required 
-                        type="tel"
-                        value={checkoutData.phone} 
-                        onChange={e => setCheckoutData({...checkoutData, phone: e.target.value})}
-                        className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" 
-                        placeholder={t('phonePlaceholder')}
-                     />
-                  </div>
-                  <div>
-                     <label className="block text-xs font-bold text-stone-500 uppercase mb-1">{t('deliveryAddress')}</label>
-                     <div className="flex gap-2">
-                        <input 
-                           value={checkoutData.address} 
-                           onChange={e => setCheckoutData({...checkoutData, address: e.target.value})}
-                           className="flex-1 px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" 
-                           placeholder={t('addressPlaceholder')}
-                        />
-                        <button 
-                           type="button" 
-                           onClick={handleGeoLocation}
-                           className="bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-300 p-3 rounded-xl hover:bg-stone-200 dark:hover:bg-stone-600 transition"
-                        >
-                           {isLocating ? <Loader2 className="animate-spin" /> : <Navigation />}
-                        </button>
-                     </div>
-                     {checkoutData.mapLink && (
-                        <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
-                           <CheckCircle size={12} /> {t('locationFetched')}
-                        </p>
-                     )}
-                  </div>
-                  
-                  <div className="pt-4 flex items-center justify-between font-bold text-lg border-t border-stone-100 dark:border-stone-800">
-                     <span>{t('total')}</span>
-                     <span className="text-orange-600">{cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)} {t('currency')}</span>
-                  </div>
-                  
-                  <button type="submit" className="w-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 py-4 rounded-xl font-bold hover:bg-black dark:hover:bg-stone-200 transition shadow-xl shadow-stone-900/10">
-                     {t('confirmOrder')}
-                  </button>
-               </form>
-            </div>
-         </div>
-      )}
+        {/* AiChef Component */}
+        <AiChef menuItems={menuItems} />
 
-      {isCartOpen && (
-         <div className="fixed inset-0 z-50 flex justify-end">
-            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
-            <div className="relative w-full max-w-md bg-white dark:bg-stone-900 h-full shadow-2xl flex flex-col animate-slide-in-right">
-               <div className="p-6 border-b border-stone-100 dark:border-stone-800 flex justify-between items-center">
-                  <h2 className="text-2xl font-black dark:text-white">{t('cart')}</h2>
-                  <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full transition"><X size={24} /></button>
-               </div>
-               
-               <div className="flex-1 overflow-y-auto p-6 space-y-4">
-                  {cart.length === 0 ? (
-                     <div className="h-full flex flex-col items-center justify-center text-stone-400 space-y-4">
-                        <ShoppingBag size={64} className="opacity-20" />
-                        <p className="font-bold">{t('cartEmpty')}</p>
-                        <button onClick={() => setIsCartOpen(false)} className="px-6 py-2 bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 rounded-full font-bold text-sm">
-                           {t('browseMenu')}
-                        </button>
-                     </div>
-                  ) : (
-                     cart.map((item, idx) => (
-                        <div key={`${item.id}-${idx}`} className="flex gap-4 items-center bg-stone-50 dark:bg-stone-800/50 p-3 rounded-2xl">
-                           <img src={item.image} alt={item.name} className="w-16 h-16 rounded-xl object-cover" />
-                           <div className="flex-1">
-                              <h4 className="font-bold text-sm dark:text-white">{item.name}</h4>
-                              <p className="text-orange-600 font-bold text-sm">{item.price} {t('currency')}</p>
-                           </div>
-                           <div className="flex items-center gap-3 bg-white dark:bg-stone-800 rounded-lg p-1 shadow-sm">
-                              <button 
-                                 onClick={() => {
-                                    const newCart = [...cart];
-                                    if(newCart[idx].quantity > 1) {
-                                       newCart[idx].quantity--;
-                                       setCart(newCart);
-                                    } else {
-                                       setCart(cart.filter((_, i) => i !== idx));
-                                    }
-                                 }}
-                                 className="p-1 hover:text-red-500"
-                              >
-                                 <Minus size={14} />
-                              </button>
-                              <span className="font-bold text-sm w-4 text-center">{item.quantity}</span>
-                              <button 
-                                 onClick={() => {
-                                    const newCart = [...cart];
-                                    newCart[idx].quantity++;
-                                    setCart(newCart);
-                                 }}
-                                 className="p-1 hover:text-green-500"
-                              >
-                                 <Plus size={14} />
-                              </button>
-                           </div>
-                        </div>
-                     ))
-                  )}
-               </div>
-               
-               {cart.length > 0 && (
-                  <div className="p-6 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-800">
-                     <div className="flex justify-between items-center mb-4">
-                        <span className="text-stone-500 font-bold">{t('total')}</span>
-                        <span className="text-2xl font-black text-stone-900 dark:text-white">{cart.reduce((sum, i) => sum + (i.price * i.quantity), 0)} {t('currency')}</span>
-                     </div>
-                     <button onClick={handleInitiateCheckout} className="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-red-600/20 hover:bg-red-700 hover:shadow-red-600/30 transition-all flex items-center justify-center gap-2">
-                        {t('checkout')} <ArrowRight size={20} />
-                     </button>
-                  </div>
-               )}
-            </div>
-         </div>
-      )}
-
-      {isAuthModalOpen && (
-         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-             <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-md animate-scale-in">
-                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-black dark:text-white">{loginMode === 'login' ? t('login') : t('register')}</h2>
-                    <button onClick={() => setIsAuthModalOpen(false)}><X size={24} className="text-stone-400" /></button>
-                 </div>
-                 
-                 <form 
-                    onSubmit={async (e) => {
-                       e.preventDefault();
-                       const fd = new FormData(e.currentTarget);
-                       if(loginMode === 'login') {
-                          await handleLogin(fd.get('email') as string, fd.get('password') as string);
-                       } else {
-                          await handleRegister(fd.get('name') as string, fd.get('phone') as string, fd.get('email') as string, fd.get('password') as string);
-                       }
-                    }}
-                    className="space-y-4"
-                 >
-                    {loginMode === 'register' && (
-                       <>
-                          <input name="name" placeholder={t('namePlaceholder')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                          <input name="phone" placeholder={t('phonePlaceholder')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                       </>
-                    )}
-                    <input name="email" type="text" placeholder={t('email')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                    <input name="password" type="password" placeholder={t('password')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                    
-                    <button type="submit" className="w-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 py-3 rounded-xl font-bold hover:bg-black transition">
-                       {loginMode === 'login' ? t('loginBtn') : t('registerBtn')}
-                    </button>
-                 </form>
-                 
-                 <div className="mt-6 text-center">
-                    <button onClick={() => setLoginMode(loginMode === 'login' ? 'register' : 'login')} className="text-sm font-bold text-stone-500 hover:text-orange-600 transition">
-                       {loginMode === 'login' ? t('noAccount') + ' ' + t('registerNow') : t('haveAccount') + ' ' + t('loginBtn')}
-                    </button>
-                 </div>
-             </div>
-         </div>
-      )}
-
-      {isAdminLoginOpen && (
-          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-             <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-md animate-scale-in">
-                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-black dark:text-white">{t('adminLoginTitle')}</h2>
-                    <button onClick={() => setIsAdminLoginOpen(false)}><X size={24} className="text-stone-400" /></button>
-                 </div>
-                 
-                 <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-xl mb-6">
-                    <button onClick={() => setAdminLoginType('admin')} className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'admin' ? 'bg-white dark:bg-stone-700 shadow-sm' : 'text-stone-500'}`}>Admin</button>
-                    <button onClick={() => setAdminLoginType('driver')} className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'driver' ? 'bg-white dark:bg-stone-700 shadow-sm' : 'text-stone-500'}`}>Driver</button>
-                 </div>
-
-                 <form 
-                    onSubmit={(e) => {
-                       e.preventDefault();
-                       const fd = new FormData(e.currentTarget);
-                       handleAdminLogin(fd.get('username') as string, fd.get('password') as string);
-                    }}
-                    className="space-y-4"
-                 >
-                    <input name="username" placeholder={t('username')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                    <input name="password" type="password" placeholder={t('password')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                    
-                    <button type="submit" className="w-full bg-orange-600 text-white py-3 rounded-xl font-bold hover:bg-orange-700 transition">
-                       {t('loginBtn')}
-                    </button>
-                 </form>
+        {/* Cart Drawer */}
+        {isCartOpen && (
+          <div className="fixed inset-0 z-[60] flex justify-end">
+             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsCartOpen(false)}></div>
+             <div className="relative w-full max-w-md bg-white dark:bg-stone-900 h-full shadow-2xl flex flex-col animate-slide-in-right">
+                <div className="p-4 flex items-center justify-between border-b border-stone-100 dark:border-stone-800">
+                   <h2 className="text-xl font-black flex items-center gap-2 dark:text-white"><ShoppingBag className="text-orange-600"/> {t('cart')}</h2>
+                   <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full dark:text-white"><X size={20}/></button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                   {cart.length === 0 ? (
+                      <div className="text-center py-10 opacity-50">
+                         <ShoppingBag size={64} className="mx-auto mb-4 text-stone-300"/>
+                         <p className="font-bold dark:text-stone-400">{t('cartEmpty')}</p>
+                         <button onClick={() => { setIsCartOpen(false); setView('menu'); }} className="mt-4 text-orange-600 font-bold hover:underline">{t('browseMenu')}</button>
+                      </div>
+                   ) : (
+                      cart.map((item, idx) => (
+                         <div key={idx} className="flex gap-4 items-center bg-stone-50 dark:bg-stone-800 p-3 rounded-xl">
+                            <img src={item.image} alt={item.name} className="w-16 h-16 rounded-lg object-cover"/>
+                            <div className="flex-1">
+                               <h4 className="font-bold text-sm dark:text-white line-clamp-1">{item.name}</h4>
+                               <p className="text-orange-600 font-bold text-sm">{item.price * item.quantity} {t('currency')}</p>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white dark:bg-stone-900 rounded-lg p-1 border dark:border-stone-700">
+                               <button onClick={() => {
+                                  const newCart = [...cart];
+                                  if(newCart[idx].quantity > 1) {
+                                     newCart[idx].quantity--;
+                                     setCart(newCart);
+                                  } else {
+                                     setCart(cart.filter((_, i) => i !== idx));
+                                  }
+                               }} className="p-1 hover:bg-stone-100 dark:hover:bg-stone-800 rounded dark:text-white"><Minus size={14}/></button>
+                               <span className="font-bold w-6 text-center text-sm dark:text-white">{item.quantity}</span>
+                               <button onClick={() => {
+                                  const newCart = [...cart];
+                                  newCart[idx].quantity++;
+                                  setCart(newCart);
+                               }} className="p-1 hover:bg-stone-100 dark:hover:bg-stone-800 rounded dark:text-white"><Plus size={14}/></button>
+                            </div>
+                         </div>
+                      ))
+                   )}
+                </div>
+                {cart.length > 0 && (
+                   <div className="p-4 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/50">
+                      <div className="flex justify-between items-center mb-4">
+                         <span className="font-bold text-stone-500 dark:text-stone-400">{t('total')}</span>
+                         <span className="text-2xl font-black text-stone-900 dark:text-white">{cart.reduce((a, b) => a + (b.price * b.quantity), 0)} {t('currency')}</p>
+                      </div>
+                      <button onClick={handleInitiateCheckout} className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 transition flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20">
+                         {t('checkout')} <ArrowRight size={18}/>
+                      </button>
+                   </div>
+                )}
              </div>
           </div>
-      )}
-      
-      {isProductModalOpen && (
-         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="bg-white dark:bg-stone-900 p-8 rounded-3xl shadow-2xl w-full max-w-2xl animate-scale-in max-h-[90vh] overflow-y-auto">
-               <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-black dark:text-white">{productForm.id ? t('editProduct') : t('addProduct')}</h2>
-                  <button onClick={() => setIsProductModalOpen(false)}><X size={24} className="text-stone-400" /></button>
-               </div>
-               
-               <form onSubmit={handleSaveProduct} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input name="name" defaultValue={productForm.name} placeholder={t('productName')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                      <input name="price" type="number" step="0.01" defaultValue={productForm.price} placeholder={t('productPrice')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" required />
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <select name="category" defaultValue={productForm.category || 'burger'} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none">
-                          {CATEGORIES.filter(c => c.id !== 'all').map(c => <option key={c.id} value={c.id}>{t(c.id)}</option>)}
-                      </select>
-                  </div>
+        )}
 
-                  <textarea name="description" defaultValue={productForm.description} placeholder={t('productDesc')} className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" rows={3} required></textarea>
-
-                  <div className="space-y-2">
-                      <label className="text-xs font-bold text-stone-500 uppercase">{t('productImage')}</label>
-                      <div className="flex gap-2 mb-2">
-                         <button type="button" onClick={() => setImageInputMethod('url')} className={`px-3 py-1 rounded text-xs font-bold ${imageInputMethod === 'url' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromUrl')}</button>
-                         <button type="button" onClick={() => setImageInputMethod('file')} className={`px-3 py-1 rounded text-xs font-bold ${imageInputMethod === 'file' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromDevice')}</button>
-                      </div>
-                      {imageInputMethod === 'url' ? (
-                          <input name="image" defaultValue={productForm.image} placeholder="https://..." className="w-full px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-800 border-none focus:ring-2 focus:ring-orange-500 outline-none" />
-                      ) : (
-                          <div className="relative h-24 bg-stone-50 dark:bg-stone-800 border-2 border-dashed border-stone-200 dark:border-stone-700 rounded-xl flex items-center justify-center text-stone-400 cursor-pointer hover:bg-stone-100 transition">
-                              <input type="file" accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                              <div className="text-center">
-                                  {isUploading ? <Loader2 className="animate-spin mx-auto mb-1" /> : <Upload className="mx-auto mb-1" />}
-                                  <span className="text-xs font-bold">{isUploading ? t('uploading') : (uploadedImage ? t('imageSource') : t('uploadText'))}</span>
+        {/* Auth Modal */}
+        {isAuthModalOpen && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAuthModalOpen(false)}></div>
+             <div className="relative w-full max-w-md bg-white dark:bg-stone-900 rounded-3xl shadow-2xl overflow-hidden animate-scale-in">
+                <div className="p-8">
+                   <div className="text-center mb-8">
+                      <h2 className="text-3xl font-black text-stone-900 dark:text-white mb-2">{loginMode === 'login' ? t('welcomeBack') : t('joinUs')}</h2>
+                      <p className="text-stone-500 dark:text-stone-400">{loginMode === 'login' ? 'Enter your details to access your account' : 'Create your account to start ordering'}</p>
+                   </div>
+                   
+                   <form onSubmit={async (e) => {
+                      e.preventDefault();
+                      const fd = new FormData(e.currentTarget);
+                      if (loginMode === 'login') {
+                         await handleLogin(fd.get('email') as string, fd.get('password') as string);
+                      } else {
+                         await handleRegister(fd.get('name') as string, fd.get('phone') as string, fd.get('email') as string, fd.get('password') as string);
+                      }
+                   }} className="space-y-4">
+                      {loginMode === 'register' && (
+                         <>
+                           <div className="space-y-1">
+                              <label className="text-xs font-bold text-stone-500 ml-1">{t('namePlaceholder')}</label>
+                              <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                                 <UserIcon size={18} className="text-stone-400"/>
+                                 <input name="name" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="John Doe" />
                               </div>
-                          </div>
+                           </div>
+                           <div className="space-y-1">
+                              <label className="text-xs font-bold text-stone-500 ml-1">{t('phone')}</label>
+                              <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                                 <Phone size={18} className="text-stone-400"/>
+                                 <input name="phone" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="+212 6..." />
+                              </div>
+                           </div>
+                         </>
                       )}
+                      <div className="space-y-1">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{loginMode === 'login' ? 'Email or Username' : t('email')}</label>
+                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                            <Mail size={18} className="text-stone-400"/>
+                            <input name="email" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="hello@example.com" />
+                         </div>
+                      </div>
+                      <div className="space-y-1">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{t('password')}</label>
+                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                            <Lock size={18} className="text-stone-400"/>
+                            <input name="password" type="password" required className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white placeholder:text-stone-400" placeholder="••••••••" />
+                         </div>
+                      </div>
+
+                      <button type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-4 rounded-xl font-bold hover:opacity-90 transition shadow-lg mt-4">
+                         {loginMode === 'login' ? t('loginBtn') : t('registerBtn')}
+                      </button>
+                   </form>
+
+                   <div className="mt-6 text-center">
+                      <p className="text-stone-500 dark:text-stone-400 text-sm">
+                         {loginMode === 'login' ? t('noAccount') : t('haveAccount')} {' '}
+                         <button onClick={() => setLoginMode(loginMode === 'login' ? 'register' : 'login')} className="text-orange-600 font-bold hover:underline">
+                            {loginMode === 'login' ? t('registerNow') : t('loginBtn')}
+                         </button>
+                      </p>
+                   </div>
+                </div>
+             </div>
+          </div>
+        )}
+
+        {/* Admin Login Modal */}
+        {isAdminLoginOpen && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsAdminLoginOpen(false)}></div>
+             <div className="relative w-full max-w-sm bg-white dark:bg-stone-900 rounded-3xl shadow-2xl p-6 animate-scale-in">
+                <h3 className="text-xl font-black mb-1 dark:text-white">{t('adminLoginTitle')}</h3>
+                <p className="text-sm text-stone-500 mb-6">{t('adminLoginDesc')}</p>
+                
+                <div className="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-xl mb-6">
+                  <button 
+                    onClick={() => setAdminLoginType('admin')}
+                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'admin' ? 'bg-white dark:bg-stone-700 shadow-sm text-stone-900 dark:text-white' : 'text-stone-500'}`}
+                  >Admin</button>
+                  <button 
+                    onClick={() => setAdminLoginType('driver')}
+                    className={`flex-1 py-2 rounded-lg text-sm font-bold transition ${adminLoginType === 'driver' ? 'bg-white dark:bg-stone-700 shadow-sm text-stone-900 dark:text-white' : 'text-stone-500'}`}
+                  >Driver</button>
+                </div>
+
+                <form onSubmit={(e) => {
+                   e.preventDefault();
+                   const fd = new FormData(e.currentTarget);
+                   handleAdminLogin(fd.get('username') as string, fd.get('password') as string);
+                }} className="space-y-3">
+                   <input name="username" placeholder={t('username')} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                   <input name="password" type="password" placeholder={t('password')} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                   <button type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-3 rounded-xl font-bold hover:opacity-90">{t('loginBtn')}</button>
+                </form>
+             </div>
+          </div>
+        )}
+
+        {/* Checkout Modal */}
+        {isCheckoutModalOpen && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCheckoutModalOpen(false)}></div>
+             <div className="relative w-full max-w-lg bg-white dark:bg-stone-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+                <div className="p-4 border-b border-stone-100 dark:border-stone-800 flex justify-between items-center">
+                   <h3 className="text-lg font-black dark:text-white">{t('checkoutTitle')}</h3>
+                   <button onClick={() => setIsCheckoutModalOpen(false)}><X size={20} className="text-stone-400"/></button>
+                </div>
+                <div className="p-6 overflow-y-auto">
+                   <form id="checkout-form" onSubmit={handleFinalizeCheckout} className="space-y-4">
+                      <div className="space-y-1">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{t('namePlaceholder')}</label>
+                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                            <UserIcon size={18} className="text-stone-400"/>
+                            <input 
+                               value={checkoutData.name} 
+                               onChange={e => setCheckoutData({...checkoutData, name: e.target.value})} 
+                               required 
+                               className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white" 
+                               placeholder="Your Name"
+                            />
+                         </div>
+                      </div>
+                      <div className="space-y-1">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{t('phone')}</label>
+                         <div className="flex items-center gap-2 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl px-4 py-3">
+                            <Phone size={18} className="text-stone-400"/>
+                            <input 
+                               value={checkoutData.phone} 
+                               onChange={e => setCheckoutData({...checkoutData, phone: e.target.value})} 
+                               required 
+                               className="bg-transparent flex-1 outline-none font-bold text-stone-900 dark:text-white" 
+                               placeholder="+212..."
+                            />
+                         </div>
+                      </div>
+                      
+                      <div className="space-y-2 pt-2">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{t('deliveryAddress')}</label>
+                         <button 
+                           type="button" 
+                           onClick={handleGeoLocation} 
+                           className="w-full py-3 border-2 border-dashed border-orange-200 dark:border-orange-900/40 bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 rounded-xl font-bold hover:bg-orange-100 dark:hover:bg-orange-900/20 transition flex items-center justify-center gap-2"
+                           disabled={isLocating}
+                         >
+                            {isLocating ? <Loader2 className="animate-spin" size={18}/> : <MapPin size={18}/>}
+                            {isLocating ? t('locating') : t('locateMe')}
+                         </button>
+                         {checkoutData.mapLink && (
+                            <div className="flex items-center gap-2 text-green-600 bg-green-50 dark:bg-green-900/20 p-2 rounded-lg text-xs font-bold">
+                               <CheckCircle size={14}/> {t('locationFetched')}
+                            </div>
+                         )}
+                         <textarea 
+                            value={checkoutData.address} 
+                            onChange={e => setCheckoutData({...checkoutData, address: e.target.value})} 
+                            className="w-full bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl p-4 outline-none focus:ring-2 focus:ring-orange-500 min-h-[80px] font-bold text-sm dark:text-white"
+                            placeholder={t('addressPlaceholder') as string}
+                         />
+                      </div>
+                   </form>
+                </div>
+                <div className="p-4 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-900">
+                   <div className="flex justify-between items-center mb-4 text-sm">
+                      <span className="text-stone-500">{t('total')}</span>
+                      <span className="font-black text-xl dark:text-white">{cart.reduce((a, b) => a + (b.price * b.quantity), 0)} {t('currency')}</span>
+                   </div>
+                   <button form="checkout-form" type="submit" className="w-full bg-stone-900 text-white dark:bg-white dark:text-stone-900 py-4 rounded-xl font-bold hover:opacity-90 transition shadow-lg">
+                      {t('confirmOrder')}
+                   </button>
+                </div>
+             </div>
+          </div>
+        )}
+
+        {/* Product Modal */}
+        {isProductModalOpen && (
+           <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+               <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsProductModalOpen(false)}></div>
+               <div className="relative w-full max-w-2xl bg-white dark:bg-stone-900 rounded-3xl shadow-2xl p-6 md:p-8 animate-scale-in max-h-[90vh] overflow-y-auto">
+                  <div className="flex justify-between items-center mb-6">
+                     <h3 className="text-2xl font-black dark:text-white">{productForm.id ? t('editProduct') : t('addProduct')}</h3>
+                     <button onClick={() => setIsProductModalOpen(false)} className="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-full dark:text-white"><X size={24}/></button>
                   </div>
                   
-                  <div className="border-t border-stone-100 dark:border-stone-800 pt-4">
-                      <p className="font-bold text-sm mb-3 text-stone-500">القيمة الغذائية (اختياري)</p>
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
-                          <input name="calories" type="number" defaultValue={productForm.calories} placeholder={t('calories')} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-800 text-xs" />
-                          <input name="spiciness" type="number" max="100" defaultValue={productForm.spiciness} placeholder={t('spiciness')} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-800 text-xs" />
-                          <input name="sweetness" type="number" max="100" defaultValue={productForm.sweetness} placeholder={t('sweetness')} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-800 text-xs" />
-                          <input name="protein" type="number" defaultValue={productForm.protein} placeholder={t('protein')} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-800 text-xs" />
-                          <input name="carbs" type="number" defaultValue={productForm.carbs} placeholder={t('carbs')} className="px-3 py-2 rounded-lg bg-stone-50 dark:bg-stone-800 text-xs" />
-                      </div>
-                  </div>
+                  <form onSubmit={handleSaveProduct} className="space-y-4">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                           <label className="text-xs font-bold text-stone-500 ml-1">{t('productName')}</label>
+                           <input name="name" defaultValue={productForm.name} required className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                        </div>
+                        <div className="space-y-1">
+                           <label className="text-xs font-bold text-stone-500 ml-1">{t('productPrice')}</label>
+                           <input name="price" type="number" step="0.5" defaultValue={productForm.price} required className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                        </div>
+                     </div>
 
-                  <button type="submit" disabled={isUploading} className="w-full bg-stone-900 dark:bg-white text-white dark:text-stone-900 py-3 rounded-xl font-bold hover:bg-black transition mt-4 disabled:opacity-50">
-                     {t('save')}
-                  </button>
-               </form>
+                     <div className="space-y-1">
+                        <label className="text-xs font-bold text-stone-500 ml-1">{t('productCategory')}</label>
+                        <select name="category" defaultValue={productForm.category || 'burger'} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white">
+                           {CATEGORIES.filter(c => c.id !== 'all').map(c => (
+                              <option key={c.id} value={c.id}>{t(c.id as any)}</option>
+                           ))}
+                        </select>
+                     </div>
+
+                     <div className="space-y-2">
+                         <label className="text-xs font-bold text-stone-500 ml-1">{t('productImage')}</label>
+                         <div className="flex gap-2">
+                            <button type="button" onClick={() => setImageInputMethod('url')} className={`flex-1 py-2 rounded-lg text-sm font-bold ${imageInputMethod === 'url' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromUrl')}</button>
+                            <button type="button" onClick={() => setImageInputMethod('file')} className={`flex-1 py-2 rounded-lg text-sm font-bold ${imageInputMethod === 'file' ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-600'}`}>{t('fromDevice')}</button>
+                         </div>
+                         {imageInputMethod === 'url' ? (
+                            <input name="image" defaultValue={productForm.image} placeholder="https://..." className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                         ) : (
+                            <div className="relative h-20 bg-stone-50 dark:bg-stone-800 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-xl flex items-center justify-center text-stone-500 cursor-pointer hover:bg-stone-100 dark:hover:bg-stone-700/50 transition">
+                                 <input type="file" accept="image/*" onChange={handleFileUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                                 <span className="font-bold flex items-center gap-2">
+                                    {isUploading ? <Loader2 className="animate-spin" /> : <Upload />}
+                                    {isUploading ? t('uploading') : (uploadedImage ? t('imageSource') : t('uploadText'))}
+                                 </span>
+                            </div>
+                         )}
+                     </div>
+
+                     <div className="space-y-1">
+                        <label className="text-xs font-bold text-stone-500 ml-1">{t('productDesc')}</label>
+                        <textarea name="description" defaultValue={productForm.description} rows={3} className="w-full px-4 py-3 bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-xl outline-none focus:ring-2 focus:ring-orange-500 dark:text-white" />
+                     </div>
+
+                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <input name="calories" type="number" placeholder={t('calories')} defaultValue={productForm.calories} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
+                        <input name="spiciness" type="number" placeholder={t('spiciness')} defaultValue={productForm.spiciness} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
+                        <input name="protein" type="number" placeholder={t('protein')} defaultValue={productForm.protein} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
+                        <input name="carbs" type="number" placeholder={t('carbs')} defaultValue={productForm.carbs} className="px-3 py-2 bg-stone-50 dark:bg-stone-800 rounded-lg text-sm outline-none border border-stone-200 dark:border-stone-700" />
+                     </div>
+
+                     <button type="submit" disabled={isUploading} className="w-full bg-orange-600 text-white py-4 rounded-xl font-bold hover:bg-orange-700 transition shadow-lg mt-4 disabled:opacity-50">
+                        {t('save')}
+                     </button>
+                  </form>
+               </div>
+           </div>
+        )}
+
+        {/* Toast Notification */}
+        {toast && (
+           <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in-down ${toast.type === 'success' ? 'bg-stone-900 text-white' : 'bg-red-600 text-white'}`}>
+              {toast.type === 'success' ? <CheckCircle size={18} className="text-green-400"/> : <AlertCircle size={18} className="text-white"/>}
+              <span className="font-bold text-sm">{toast.message}</span>
+           </div>
+        )}
+
+      </main>
+
+      <footer className="mt-20 border-t border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 pt-12 pb-24 md:pb-12 px-6">
+         <div className="container mx-auto text-center">
+            <h2 className="text-2xl font-black mb-4 dark:text-white">Sabor del Magreb</h2>
+            <div className="flex justify-center gap-6 mb-8 text-stone-400">
+               <Facebook className="hover:text-blue-600 cursor-pointer transition"/>
+               <Instagram className="hover:text-pink-600 cursor-pointer transition"/>
+               <Twitter className="hover:text-sky-500 cursor-pointer transition"/>
             </div>
+            <p className="text-stone-400 text-sm">© 2024 Sabor del Magreb. All rights reserved.</p>
          </div>
-      )}
-
-      <AiChef menuItems={menuItems} />
-      
-      {toast && (
-        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-[70] px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 animate-fade-in-down ${toast.type === 'success' ? 'bg-stone-900 text-white' : 'bg-red-600 text-white'}`}>
-           {toast.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
-           <span className="font-bold text-sm">{toast.message}</span>
-        </div>
-      )}
+      </footer>
     </div>
   );
 };

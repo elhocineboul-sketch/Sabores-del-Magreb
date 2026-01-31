@@ -1,6 +1,6 @@
 {
-  "name": "Sabores del Magreb",
-  "description": "A modern fast-food website fusing Moroccan flavors with quick service dining. Features online ordering, order tracking, and an AI-powered menu assistant.",
+  "name": "Sabor del Magreb",
+  "description": "Un sitio web moderno de comida rápida que fusiona los sabores marroquíes con un servicio ágil. Cuenta con pedidos en línea, seguimiento de pedidos y un asistente de menú impulsado por IA.",
   "requestFramePermissions": [
     "geolocation"
   ]

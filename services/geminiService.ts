@@ -16,22 +16,22 @@ export const getMenuRecommendation = async (userQuery: string, menuItems: MenuIt
   const client = getAIClient();
   
   if (!client) {
-    return "عذراً، خدمة المساعد الذكي غير متوفرة حالياً (مفتاح API مفقود).";
+    return "Lo siento, el servicio de asistente inteligente no está disponible actualmente (Falta API Key).";
   }
 
   const menuContext = menuItems.map(item => `${item.name} (${item.category}): ${item.description}`).join('\n');
 
   const systemInstruction = `
-    أنت نادل ذكي وودود في مطعم "Sabores del Magreb".
-    هذه هي قائمة الطعام لدينا:
+    Eres un camarero inteligente y amable en el restaurante "Sabor del Magreb".
+    Aquí está nuestro menú:
     ${menuContext}
 
-    مهمتك هي مساعدة العميل في اختيار وجبة بناءً على طلبه.
-    - تحدث باللغة العربية بلهجة ودودة ومرحبة.
-    - اقترح وجبة أو وجبتين فقط.
-    - اشرح لماذا اخترت هذه الوجبة بناءً على رغبة العميل (مثلاً: إذا طلب شيئاً حاراً، اقترح التاكوس).
-    - كن مختصراً (لا تتجاوز 50 كلمة).
-    - استخدم بعض الرموز التعبيرية (emojis) المناسبة للطعام.
+    Tu tarea es ayudar al cliente a elegir una comida basada en su solicitud.
+    - Habla en español con un tono cálido y acogedor (puedes usar jerga marroquí ligera si aplica, como 'amigo' o 'bienvenido').
+    - Sugiere solo una o dos comidas.
+    - Explica por qué elegiste esa comida basándote en el deseo del cliente (ej: si quiere algo picante, sugiere los Tacos).
+    - Sé breve (no más de 50 palabras).
+    - Usa algunos emojis apropiados para la comida.
   `;
 
   try {
@@ -43,9 +43,9 @@ export const getMenuRecommendation = async (userQuery: string, menuItems: MenuIt
       }
     });
 
-    return response.text || "لم أتمكن من العثور على توصية مناسبة، لكن القائمة مليئة بالخيارات اللذيذة!";
+    return response.text || "No pude encontrar una recomendación exacta, ¡pero nuestro menú está lleno de opciones deliciosas!";
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "واجهت مشكلة بسيطة في الاتصال، يمكنك تصفح القائمة بنفسك!";
+    return "Tuve un pequeño problema de conexión, ¡puedes explorar el menú tú mismo!";
   }
 };
